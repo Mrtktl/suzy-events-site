@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Suzy Events — Yönetim</title>
+<link rel="icon" href="../uploads/logo.jpg">
+<style>
+  :root{ --bg:#14100D; --panel:#1E1712; --panel2:#251C16; --ink:#F4EEE3; --soft:#C9BCA9; --faint:#8B7F70;
+    --brass:#C9A467; --brass2:#E8C77E; --line:rgba(244,238,227,.16); --ok:#7fbf8a; --bad:#e08a7a; }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  button{font:inherit;cursor:pointer}
+  .btn{background:var(--brass);color:#1B140D;border:0;border-radius:4px;padding:9px 16px;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
+  .btn:hover{background:var(--brass2)} .btn[disabled]{opacity:.5;cursor:default}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)} .btn.ghost:hover{border-color:var(--brass);color:var(--brass2)}
+  input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:10px 12px;font:inherit;outline:none}
+  input:focus,textarea:focus{border-color:var(--brass)}
+  label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:14px 0 6px}
+  .screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:var(--bg);z-index:50}
+  .screen.on{display:flex}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:34px;width:100%;max-width:420px}
+  .card h1{font-size:1.4rem;margin:0 0 4px} .card p{color:var(--soft);margin:0 0 18px;font-size:.9rem}
+  .err{color:var(--bad);font-size:.85rem;min-height:1.2em;margin-top:10px}
+  .pin{letter-spacing:.5em;text-align:center;font-size:1.6rem}
+  ol.steps{color:var(--soft);font-size:.86rem;padding-left:18px;margin:0 0 6px} ol.steps li{margin:5px 0} ol.steps b{color:var(--ink)}
+  a{color:var(--brass2)}
+  #app{display:none;height:100%;flex-direction:column} #app.on{display:flex}
+  .top{height:56px;flex:none;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+  .top .brand{font-weight:700;margin-right:auto;display:flex;align-items:center;gap:10px}
+  .top .brand img{width:28px;height:28px;border-radius:50%}
+  .top .hint{color:var(--faint);font-size:.8rem}
+  .chip{font-size:.8rem;padding:5px 11px;border-radius:20px;border:1px solid var(--line);color:var(--soft);white-space:nowrap}
+  .chip.dirty{border-color:var(--brass);color:var(--brass2)} .chip.ok{border-color:var(--ok);color:var(--ok)} .chip.bad{border-color:var(--bad);color:var(--bad)}
+  .stage{flex:1;min-height:0;display:flex;justify-content:center;background:#0c0907;position:relative}
+  iframe{border:0;height:100%;width:100%;background:#fff;transition:width .2s}
+  iframe.mobile{width:390px;box-shadow:0 0 0 1px var(--line)}
+  .drawer{position:absolute;top:0;right:0;bottom:0;width:360px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);padding:18px;overflow:auto;transform:translateX(100%);transition:transform .2s;z-index:5}
+  .drawer.on{transform:none}
+  .drawer h3{margin:4px 0 2px;font-size:1rem} .drawer .sub{color:var(--faint);font-size:.8rem;margin:0 0 8px}
+  .imglist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .imgitem{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px;cursor:pointer;text-align:center;font-size:.74rem;color:var(--soft)}
+  .imgitem:hover{border-color:var(--brass)} .imgitem img{width:100%;height:70px;object-fit:cover;border-radius:3px;display:block;margin-bottom:5px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:60;padding:20px}
+  .modal.on{display:flex} .modal .card{max-width:460px}
+  .modal img.prev{width:100%;max-height:220px;object-fit:cover;border-radius:4px;margin-bottom:6px}
+  .row{display:flex;gap:10px;margin-top:18px;justify-content:flex-end}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 18px;border-radius:6px;font-size:.85rem;z-index:80;display:none}
+  .toast.on{display:block}
+  @media(max-width:1180px){.top .hint{display:none}.top .btn{padding:8px 10px;font-size:.72rem}.top .brand{font-size:.9rem}}
+</style>
+</head>
+<body>
+
+<!-- PIN -->
+<div class="screen on" id="gate">
+  <form class="card" id="pinForm" autocomplete="off">
+    <h1>Suzy Events Yönetim</h1>
+    <p>Devam etmek için şifreyi girin.</p>
+    <input class="pin" id="pin" type="password" inputmode="numeric" maxlength="12" placeholder="••••" autofocus>
+    <div class="err" id="pinErr"></div>
+    <div class="row"><button class="btn" type="submit">Giriş</button></div>
+  </form>
+</div>
+
+<!-- GitHub token (first time on a device) -->
+<div class="screen" id="tokenScreen">
+  <form class="card" id="tokenForm" style="max-width:520px" autocomplete="off">
+    <h1>Yayın izni (tek seferlik)</h1>
+    <p>Değişikliklerin siteye otomatik yazılabilmesi için GitHub'dan bir erişim anahtarı oluşturup buraya yapıştırın. Bu cihazda saklanır, başka kimseyle paylaşılmaz.</p>
+    <ol class="steps">
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> sayfasını açın.</li>
+      <li><b>Token name:</b> suzy-admin &nbsp; <b>Expiration:</b> No expiration (veya 1 yıl)</li>
+      <li><b>Repository access → Only select repositories →</b> <code>suzy-events-site</code></li>
+      <li><b>Permissions → Repository permissions → Contents:</b> <code>Read and write</code></li>
+      <li><b>Generate token</b> deyip çıkan <code>github_pat_…</code> kodunu kopyalayın.</li>
+    </ol>
+    <label>Erişim anahtarı</label>
+    <input id="tokenInput" type="password" placeholder="github_pat_...">
+    <div class="err" id="tokenErr"></div>
+    <div class="row"><button class="btn" type="submit">Kaydet ve Devam</button></div>
+  </form>
+</div>
+
+<!-- App -->
+<div id="app">
+  <div class="top">
+    <div class="brand"><img src="../uploads/logo.jpg" alt=""> Suzy Events — Yönetim</div>
+    <span class="hint">Sayfadaki yazıya tıklayıp doğrudan düzenleyin</span>
+    <span class="chip" id="status">Değişiklik yok</span>
+    <button class="btn ghost" id="btnView" title="Telefon / Bilgisayar görünümü">Telefon</button>
+    <button class="btn ghost" id="btnSettings">Ayarlar &amp; Görseller</button>
+    <button class="btn" id="btnPublish" disabled>Şimdi Yayınla</button>
+    <button class="btn ghost" id="btnLogout">Çıkış</button>
+  </div>
+  <div class="stage">
+    <iframe id="frame" title="Site"></iframe>
+    <aside class="drawer" id="drawer">
+      <h3>Sayfa ayarları</h3>
+      <p class="sub">Tarayıcı sekmesinde ve Google'da görünen bilgiler.</p>
+      <label>Sayfa başlığı</label><input id="setTitle">
+      <label>Açıklama (Google)</label><textarea id="setDesc" rows="3"></textarea>
+      <label>Form: etkinlik türleri (her satır bir seçenek)</label><textarea id="setTypes" rows="5"></textarea>
+      <label>Form: mesaj kutusu ipucu</label><input id="setPlaceholder">
+      <h3 style="margin-top:22px">Görseller</h3>
+      <p class="sub">Değiştirmek istediğinize tıklayın.</p>
+      <div class="imglist" id="imglist"></div>
+      <p class="sub" style="margin-top:22px"><a href="#" id="forgetToken">Bu cihazdaki yayın anahtarını sil</a></p>
+    </aside>
+  </div>
+</div>
+
+<!-- Image modal -->
+<div class="modal" id="imgModal">
+  <div class="card">
+    <h1 id="imgTitle">Görsel</h1>
+    <p>Yeni bir fotoğraf seçin; otomatik küçültülüp yüklenir.</p>
+    <img class="prev" id="imgPrev" alt="">
+    <input type="file" id="imgFile" accept="image/jpeg,image/png,image/webp">
+    <label>Alt metin (görseli tarif eden kısa yazı)</label>
+    <input id="imgAlt">
+    <div class="err" id="imgErr"></div>
+    <div class="row"><button class="btn ghost" id="imgCancel">Vazgeç</button><button class="btn" id="imgApply">Uygula</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+  var CFG = { owner:'Mrtktl', repo:'suzy-events-site', branch:'main', pinHash:'826400d71c906875cc4a530d575a855e138f391b974305ae3b5f5b0f23075aca' };
+  var $ = function(id){ return document.getElementById(id); };
+  var LS_TOKEN = 'suzy_admin_token', SS_AUTH = 'suzy_admin_auth';
+
+  /* ---------- state ---------- */
+  var changes = { texts:{}, imgs:{}, alts:{}, meta:{} };   // imgs[key] = {blob, ext, url}
+  var publishing = false, timer = null, rev = 0;
+
+  /* ---------- helpers ---------- */
+  function sha256(s){ return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){ return x.toString(16).padStart(2,'0'); }).join(''); }); }
+  function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove('on'); }, 2600); }
+  function token(){ return localStorage.getItem(LS_TOKEN); }
+  function hasChanges(){ return Object.keys(changes.texts).length || Object.keys(changes.imgs).length || Object.keys(changes.alts).length || Object.keys(changes.meta).length; }
+  function setStatus(txt, cls){ var s=$('status'); s.textContent=txt; s.className='chip '+(cls||''); }
+
+  /* ---------- auth ---------- */
+  function showApp(){
+    $('gate').classList.remove('on');
+    if(!token()){ $('tokenScreen').classList.add('on'); return; }
+    $('tokenScreen').classList.remove('on'); $('app').classList.add('on'); loadFrame();
+  }
+  $('pinForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    sha256('suzy-admin:' + $('pin').value).then(function(h){
+      if(h === CFG.pinHash){ sessionStorage.setItem(SS_AUTH,'1'); $('pinErr').textContent=''; showApp(); }
+      else { $('pinErr').textContent='Şifre hatalı.'; $('pin').value=''; }
+    });
+  });
+  $('tokenForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var t = $('tokenInput').value.trim(); if(!t) return;
+    $('tokenErr').textContent = 'Kontrol ediliyor…';
+    fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo, { headers:{ Authorization:'Bearer '+t, Accept:'application/vnd.github+json' } })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+      .then(function(r){
+        if(!r.ok) throw new Error('Anahtar geçersiz veya bu depoya erişimi yok.');
+        if(r.j.permissions && !r.j.permissions.push) throw new Error('Anahtarın "Contents: Read and write" izni yok.');
+        localStorage.setItem(LS_TOKEN, t); $('tokenInput').value=''; $('tokenErr').textContent=''; showApp();
+      }).catch(function(err){ $('tokenErr').textContent = err.message; });
+  });
+  $('btnLogout').addEventListener('click', function(){
+    if(hasChanges() && !confirm('Yayınlanmamış değişiklikler var. Yine de çıkılsın mı?')) return;
+    sessionStorage.removeItem(SS_AUTH); location.reload();
+  });
+  $('forgetToken').addEventListener('click', function(e){ e.preventDefault(); if(confirm('Yayın anahtarı bu cihazdan silinsin mi?')){ localStorage.removeItem(LS_TOKEN); location.reload(); } });
+
+  /* ---------- editing surface ---------- */
+  var frame = $('frame'), fdoc = null;
+  function loadFrame(){ frame.src = '../index.html?edit=' + Date.now(); }
+  frame.addEventListener('load', function(){ try { fdoc = frame.contentDocument; setupEditing(); } catch(e){ toast('Site yüklenemedi'); } });
+
+  function telHref(v){ var d=v.replace(/\D/g,''); if(d[0]==='0') d='90'+d.slice(1); else if(d.length===10) d='90'+d; return 'tel:+'+d; }
+  function applyHref(el){ var t=el.getAttribute('data-href-type'); if(!t) return; var v=el.textContent.trim(); el.setAttribute('href', t==='tel' ? telHref(v) : 'mailto:'+v); }
+
+  function setupEditing(){
+    var st = fdoc.createElement('style');
+    st.textContent =
+      '[data-edit]{outline:1px dashed transparent;outline-offset:3px;cursor:text;transition:outline-color .15s}' +
+      '[data-edit]:hover{outline-color:rgba(232,199,126,.85)}[data-edit]:focus{outline:2px solid #E8C77E;background:rgba(232,199,126,.08)}' +
+      '[data-edit-img]:not(link){outline:2px solid transparent;outline-offset:-2px}[data-edit-img]:not(link):hover{outline-color:#E8C77E;cursor:pointer}' +
+      '.marquee{animation:none!important;flex-wrap:wrap;width:auto!important;justify-content:center}.reveal{opacity:1!important;transform:none!important}' +
+      '.hero-scrim,.hero-inner{pointer-events:none}.hero-inner [data-edit]{pointer-events:auto}' +
+      '.gal-cap{opacity:1!important;transform:none!important}';
+    fdoc.head.appendChild(st);
+
+    fdoc.querySelectorAll('[data-edit]').forEach(function(el){ el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false'); });
+    fdoc.addEventListener('click', function(e){
+      var img = e.target.closest && e.target.closest('[data-edit-img]');
+      if(img && img.tagName!=='LINK'){ e.preventDefault(); openImg(img.getAttribute('data-edit-img')); return; }
+      if(e.target.closest && e.target.closest('a,button')) e.preventDefault();
+    }, true);
+    fdoc.addEventListener('submit', function(e){ e.preventDefault(); }, true);
+    fdoc.addEventListener('keydown', function(e){
+      if(e.target.closest && e.target.closest('[data-edit]')){ if(e.key==='Enter'){ e.preventDefault(); e.target.blur(); } e.stopPropagation(); }
+    }, true);
+    fdoc.addEventListener('paste', function(e){
+      if(e.target.closest && e.target.closest('[data-edit]')){ e.preventDefault(); var t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s*\n\s*/g,' '); fdoc.execCommand('insertText', false, t); }
+    }, true);
+    fdoc.addEventListener('input', function(e){
+      var el = e.target.closest && e.target.closest('[data-edit]'); if(!el) return;
+      var k = el.getAttribute('data-edit'), v = el.textContent;
+      changes.texts[k] = v;
+      fdoc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(o){ if(o!==el) o.textContent=v; });
+      fdoc.querySelectorAll('[data-edit="'+k+'"][data-href-type]').forEach(applyHref);
+      touched();
+    }, true);
+
+    // settings drawer fields
+    $('setTitle').value = fdoc.title;
+    var md = fdoc.querySelector('meta[name=description]'); $('setDesc').value = md ? md.content : '';
+    $('setTypes').value = Array.from(fdoc.querySelectorAll('#f-type option')).map(function(o){ return o.textContent; }).join('\n');
+    var ta = fdoc.getElementById('f-msg'); $('setPlaceholder').value = ta ? ta.getAttribute('placeholder')||'' : '';
+    buildImgList();
+  }
+
+  function buildImgList(){
+    var box = $('imglist'); box.innerHTML=''; var seen = {};
+    fdoc.querySelectorAll('[data-edit-img]').forEach(function(el){
+      var k = el.getAttribute('data-edit-img'); if(seen[k]) return; seen[k]=1;
+      var src = changes.imgs[k] ? changes.imgs[k].url : (el.tagName==='LINK' ? el.href : el.src);
+      var d = document.createElement('div'); d.className='imgitem';
+      d.innerHTML = '<img alt=""><span></span>'; d.firstChild.src = src; d.lastChild.textContent = labelFor(k);
+      d.addEventListener('click', function(){ openImg(k); }); box.appendChild(d);
+    });
+  }
+  function labelFor(k){ if(k==='hero') return 'Ana görsel (hero)'; if(k==='about') return 'Hakkımızda'; if(k==='logo') return 'Logo / ikon'; var m=k.match(/^gal(\d+)$/); return m ? 'Galeri '+m[1] : k; }
+
+  ['setTitle','setDesc','setTypes','setPlaceholder'].forEach(function(id){
+    $(id).addEventListener('input', function(){
+      changes.meta = { title:$('setTitle').value, description:$('setDesc').value, types:$('setTypes').value, placeholder:$('setPlaceholder').value };
+      if(fdoc){ fdoc.title = changes.meta.title; }
+      touched();
+    });
+  });
+  $('btnSettings').addEventListener('click', function(){ $('drawer').classList.toggle('on'); });
+  $('btnView').addEventListener('click', function(){ var m=frame.classList.toggle('mobile'); $('btnView').textContent = m ? 'Bilgisayar' : 'Telefon'; });
+
+  /* ---------- images ---------- */
+  var curKey = null, curFile = null;
+  function openImg(k){
+    curKey = k; curFile = null; $('imgFile').value=''; $('imgErr').textContent='';
+    var el = fdoc.querySelector('[data-edit-img="'+k+'"]');
+    var real = fdoc.querySelector('img[data-edit-img="'+k+'"]');
+    $('imgTitle').textContent = labelFor(k);
+    $('imgPrev').src = changes.imgs[k] ? changes.imgs[k].url : (real ? real.src : el.href);
+    $('imgAlt').value = changes.alts[k] !== undefined ? changes.alts[k] : (real ? real.getAttribute('alt')||'' : '');
+    $('imgAlt').disabled = !real;
+    $('imgModal').classList.add('on');
+  }
+  $('imgFile').addEventListener('change', function(e){ curFile = e.target.files[0] || null; if(curFile) $('imgPrev').src = URL.createObjectURL(curFile); });
+  $('imgCancel').addEventListener('click', function(){ $('imgModal').classList.remove('on'); });
+  $('imgApply').addEventListener('click', function(){
+    var k = curKey;
+    var done = function(){
+      var real = fdoc.querySelectorAll('img[data-edit-img="'+k+'"]');
+      if(!$('imgAlt').disabled){ var a=$('imgAlt').value; changes.alts[k]=a; real.forEach(function(i){ i.setAttribute('alt', a); }); }
+      $('imgModal').classList.remove('on'); buildImgList(); touched();
+    };
+    if(!curFile){ done(); return; }
+    $('imgErr').textContent = 'Görsel hazırlanıyor…';
+    prepImage(curFile, k).then(function(r){
+      changes.imgs[k] = r;
+      fdoc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){
+        if(el.tagName==='LINK') el.href = r.url; else el.src = r.url;
+      });
+      $('imgErr').textContent=''; done();
+    }).catch(function(){ $('imgErr').textContent='Görsel okunamadı.'; });
+  });
+  function prepImage(file, key){
+    var max = key==='logo' ? 600 : 2400, png = key==='logo' && file.type==='image/png';
+    return createImageBitmap(file).then(function(bmp){
+      var s = Math.min(1, max/bmp.width), w=Math.round(bmp.width*s), h=Math.round(bmp.height*s);
+      var c=document.createElement('canvas'); c.width=w; c.height=h; var x=c.getContext('2d');
+      if(!png){ x.fillStyle='#fff'; x.fillRect(0,0,w,h); }
+      x.drawImage(bmp,0,0,w,h);
+      return new Promise(function(res){ c.toBlob(function(b){ res({ blob:b, ext: png?'png':'jpg', url:URL.createObjectURL(b) }); }, png?'image/png':'image/jpeg', .86); });
+    });
+  }
+
+  /* ---------- publishing ---------- */
+  function touched(){
+    rev++; $('btnPublish').disabled = false; setStatus('Değişiklik var — kaydediliyor…','dirty');
+    clearTimeout(timer); timer = setTimeout(publish, 3000);
+  }
+  $('btnPublish').addEventListener('click', function(){ clearTimeout(timer); publish(); });
+  window.addEventListener('beforeunload', function(e){ if(hasChanges() || publishing){ e.preventDefault(); e.returnValue=''; } });
+
+  function gh(path, opts){
+    opts = opts || {};
+    return fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo+path, {
+      method: opts.method||'GET', body: opts.body ? JSON.stringify(opts.body) : undefined,
+      headers: Object.assign({ Authorization:'Bearer '+token(), Accept: opts.accept||'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28' }, opts.body?{'Content-Type':'application/json'}:{})
+    }).then(function(r){
+      if(opts.raw) return r.ok ? r.text() : Promise.reject({status:r.status});
+      return r.json().then(function(j){ if(!r.ok) return Promise.reject({status:r.status, j:j}); return j; });
+    });
+  }
+  function blobToB64(b){ return new Promise(function(res){ var f=new FileReader(); f.onload=function(){ res(String(f.result).split(',')[1]); }; f.readAsDataURL(b); }); }
+
+  /* Pure: apply the pending changes to the page source. */
+  window.__applyChanges = applyChanges;
+  function applyChanges(htmlText, ch, imgPaths){
+    var doc = new DOMParser().parseFromString(htmlText, 'text/html');
+    Object.keys(ch.texts).forEach(function(k){
+      doc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(el){
+        el.textContent = ch.texts[k];
+        var t = el.getAttribute('data-href-type');
+        if(t) el.setAttribute('href', t==='tel' ? telHref(ch.texts[k]) : 'mailto:'+ch.texts[k].trim());
+      });
+    });
+    Object.keys(imgPaths||{}).forEach(function(k){
+      doc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){ el.setAttribute(el.getAttribute('data-attr')||'src', imgPaths[k]); });
+    });
+    Object.keys(ch.alts).forEach(function(k){
+      doc.querySelectorAll('img[data-edit-img="'+k+'"]').forEach(function(el){ el.setAttribute('alt', ch.alts[k]); });
+    });
+    var m = ch.meta;
+    if(m && m.title !== undefined){
+      doc.title = m.title;
+      var md = doc.querySelector('meta[name=description]'); if(md) md.setAttribute('content', m.description);
+      var sel = doc.getElementById('f-type');
+      if(sel){ sel.innerHTML=''; m.types.split('\n').map(function(s){return s.trim();}).filter(Boolean).forEach(function(s){ var o=doc.createElement('option'); o.textContent=s; sel.appendChild(o); }); }
+      var ta = doc.getElementById('f-msg'); if(ta) ta.setAttribute('placeholder', m.placeholder);
+    }
+    return '<!doctype html>\n' + doc.documentElement.outerHTML + '\n';
+  }
+
+  function commitFiles(branch, files, message){
+    // files: [{path, content, encoding}]  -> one commit
+    var base;
+    return gh('/git/ref/heads/'+branch).then(function(ref){
+      base = ref.object.sha; return gh('/git/commits/'+base);
+    }).then(function(commit){
+      return Promise.all(files.map(function(f){ return gh('/git/blobs', {method:'POST', body:{content:f.content, encoding:f.encoding}}).then(function(b){ return {path:f.path, mode:'100644', type:'blob', sha:b.sha}; }); }))
+        .then(function(tree){ return gh('/git/trees', {method:'POST', body:{base_tree:commit.tree.sha, tree:tree}}); });
+    }).then(function(tree){
+      return gh('/git/commits', {method:'POST', body:{message:message, tree:tree.sha, parents:[base]}});
+    }).then(function(c){
+      return gh('/git/refs/heads/'+branch, {method:'PATCH', body:{sha:c.sha}});
+    });
+  }
+  window.__commitFiles = commitFiles;
+
+  function publish(attempt){
+    if(publishing){ clearTimeout(timer); timer=setTimeout(publish, 1500); return; }
+    if(!hasChanges()){ setStatus('Değişiklik yok'); $('btnPublish').disabled=true; return; }
+    publishing = true; setStatus('Yayınlanıyor…','dirty');
+    var snap = { rev:rev, texts:Object.assign({},changes.texts), alts:Object.assign({},changes.alts), meta:Object.assign({},changes.meta), imgs:Object.assign({},changes.imgs) };
+    var stamp = Date.now(), imgPaths = {}, imgFiles = [];
+    Object.keys(snap.imgs).forEach(function(k){ imgPaths[k] = 'uploads/'+k+'-'+stamp+'.'+snap.imgs[k].ext; });
+    gh('/contents/index.html?ref='+CFG.branch, {accept:'application/vnd.github.raw+json', raw:true}).then(function(src){
+      var html = applyChanges(src, snap, imgPaths);
+      return Promise.all(Object.keys(snap.imgs).map(function(k){ return blobToB64(snap.imgs[k].blob).then(function(b64){ return {path:imgPaths[k], content:b64, encoding:'base64'}; }); }))
+        .then(function(imgs){ return commitFiles(CFG.branch, imgs.concat([{path:'index.html', content:html, encoding:'utf-8'}]), 'Yönetim paneli: içerik güncellendi'); });
+    }).then(function(){
+      // drop what was published (unless edited again meanwhile)
+      Object.keys(snap.texts).forEach(function(k){ if(changes.texts[k]===snap.texts[k]) delete changes.texts[k]; });
+      Object.keys(snap.alts).forEach(function(k){ if(changes.alts[k]===snap.alts[k]) delete changes.alts[k]; });
+      Object.keys(snap.imgs).forEach(function(k){ if(changes.imgs[k]===snap.imgs[k]) delete changes.imgs[k]; });
+      if(JSON.stringify(changes.meta)===JSON.stringify(snap.meta)) changes.meta = {};
+      publishing = false;
+      if(hasChanges()){ setStatus('Değişiklik var — kaydediliyor…','dirty'); clearTimeout(timer); timer=setTimeout(publish, 1200); }
+      else { setStatus('Yayınlandı ✓ (sitede ~1 dk içinde görünür)','ok'); $('btnPublish').disabled=true; }
+    }).catch(function(err){
+      publishing = false;
+      if(!attempt && err && err.status===422){ return publish(1); }
+      var msg = err && err.status===401 ? 'Yayın anahtarı geçersiz — Ayarlar\'dan silip yenisini girin.' : 'Yayınlanamadı' + (err && err.status ? ' ('+err.status+')' : '');
+      setStatus(msg,'bad'); toast(msg); $('btnPublish').disabled=false;
+    });
+  }
+
+  /* ---------- boot ---------- */
+  if(sessionStorage.getItem(SS_AUTH)==='1') showApp();
+})();
+</script>
+</body>
+</html>
