@@ -80,6 +80,16 @@
   /* Style panel */
   .style-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
   .style-row input[type=number]{padding:7px 10px}
+  /* Svc manager */
+  .svc-icon-cell{width:32px;flex:none;cursor:pointer;display:flex;align-items:center}
+  .svc-icon-cell svg{width:28px;height:28px;color:var(--brass)}
+  .svc-icon-cell:hover svg{color:var(--brass2)}
+  /* Section manager */
+  .sec-row{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px;margin-bottom:6px}
+  .sec-row .sec-name{flex:1;font-size:.82rem;font-weight:600}
+  .vis-btn{background:transparent;border:1px solid var(--line);color:var(--faint);border-radius:3px;padding:3px 8px;font-size:.7rem;cursor:pointer}
+  .vis-btn.on{background:var(--ok);color:#0a1a0a;border-color:var(--ok)}
+  .vis-btn.off{color:var(--bad);border-color:var(--bad)}
 </style>
 </head>
 <body>
@@ -153,13 +163,45 @@
       <div class="style-row">
         <div>
           <label>Font ailesi</label>
-          <select id="stylePropFont" onchange="applyStyleProp('fontFamily',this.value)">
+          <select id="stylePropFont" onchange="applyStylePropFont(this.value)">
             <option value="">Varsayılan</option>
-            <option value="'Fraunces',serif">Fraunces (serif)</option>
-            <option value="'Manrope',sans-serif">Manrope (sans)</option>
-            <option value="Georgia,serif">Georgia</option>
-            <option value="Arial,sans-serif">Arial</option>
-            <option value="'Courier New',monospace">Courier</option>
+            <optgroup label="— Mevcut fontlar —">
+              <option value="'Fraunces',serif">Fraunces (serif)</option>
+              <option value="'Manrope',sans-serif">Manrope (sans-serif)</option>
+            </optgroup>
+            <optgroup label="— Google: Serif —">
+              <option value="'Playfair Display',serif">Playfair Display</option>
+              <option value="'Cormorant Garamond',serif">Cormorant Garamond</option>
+              <option value="'DM Serif Display',serif">DM Serif Display</option>
+              <option value="'Lora',serif">Lora</option>
+              <option value="'Libre Baskerville',serif">Libre Baskerville</option>
+              <option value="'EB Garamond',serif">EB Garamond</option>
+              <option value="'Merriweather',serif">Merriweather</option>
+              <option value="'Crimson Text',serif">Crimson Text</option>
+              <option value="'Spectral',serif">Spectral</option>
+              <option value="Georgia,serif">Georgia</option>
+            </optgroup>
+            <optgroup label="— Google: Sans-serif —">
+              <option value="'Montserrat',sans-serif">Montserrat</option>
+              <option value="'Raleway',sans-serif">Raleway</option>
+              <option value="'Poppins',sans-serif">Poppins</option>
+              <option value="'Inter',sans-serif">Inter</option>
+              <option value="'Plus Jakarta Sans',sans-serif">Plus Jakarta Sans</option>
+              <option value="'DM Sans',sans-serif">DM Sans</option>
+              <option value="'Nunito',sans-serif">Nunito</option>
+              <option value="'Josefin Sans',sans-serif">Josefin Sans</option>
+              <option value="'Outfit',sans-serif">Outfit</option>
+              <option value="Arial,sans-serif">Arial</option>
+            </optgroup>
+            <optgroup label="— Google: Display —">
+              <option value="'Bebas Neue',cursive">Bebas Neue</option>
+              <option value="'Abril Fatface',cursive">Abril Fatface</option>
+              <option value="'Cinzel',serif">Cinzel</option>
+              <option value="'Bodoni Moda',serif">Bodoni Moda</option>
+            </optgroup>
+            <optgroup label="— Diğer —">
+              <option value="'Courier New',monospace">Courier New</option>
+            </optgroup>
           </select>
         </div>
         <div>
@@ -184,6 +226,15 @@
         <button class="btn ghost sm" onclick="clearStyle()">Stili sıfırla</button>
       </div>
 
+      <h3 style="margin-top:20px">Hizmet Kartları</h3>
+      <p class="sub">Kart ekle/sil/sırala. İkona tıklayınca ikon seçici açılır. Sürükle-bırak ile sırala.</p>
+      <div id="svcManager"></div>
+      <button class="btn ghost sm" style="width:100%;margin-top:8px" onclick="addSvcItem()">+ Kart Ekle</button>
+
+      <h3 style="margin-top:20px">Bölümler</h3>
+      <p class="sub">Bölüm göster/gizle ve sırala.</p>
+      <div id="secManager"></div>
+
       <h3 style="margin-top:20px">Galeri Yönetimi</h3>
       <p class="sub">Fotoğraf ekle/çıkar, geniş veya yüksek yap.</p>
       <div class="gal-manager" id="galManager"></div>
@@ -199,10 +250,22 @@
 
 <!-- Format toolbar (floating) -->
 <div id="fmtBar">
-  <select id="fmtFont" title="Font">
+  <select id="fmtFont" title="Font ailesi" style="max-width:130px">
     <option value="">Font</option>
     <option value="'Fraunces',serif">Fraunces</option>
     <option value="'Manrope',sans-serif">Manrope</option>
+    <option value="'Playfair Display',serif">Playfair Display</option>
+    <option value="'Cormorant Garamond',serif">Cormorant</option>
+    <option value="'DM Serif Display',serif">DM Serif</option>
+    <option value="'Lora',serif">Lora</option>
+    <option value="'Montserrat',sans-serif">Montserrat</option>
+    <option value="'Raleway',sans-serif">Raleway</option>
+    <option value="'Poppins',sans-serif">Poppins</option>
+    <option value="'Inter',sans-serif">Inter</option>
+    <option value="'Plus Jakarta Sans',sans-serif">Plus Jakarta</option>
+    <option value="'Bebas Neue',cursive">Bebas Neue</option>
+    <option value="'Cinzel',serif">Cinzel</option>
+    <option value="'Bodoni Moda',serif">Bodoni Moda</option>
     <option value="Georgia,serif">Georgia</option>
     <option value="Arial,sans-serif">Arial</option>
   </select>
@@ -250,16 +313,17 @@
 var CFG={owner:'Mrtktl',repo:'suzy-events-site',branch:'main',pinHash:'826400d71c906875cc4a530d575a855e138f391b974305ae3b5f5b0f23075aca'};
 var $=function(id){return document.getElementById(id);};
 var LS_TOKEN='suzy_admin_token',SS_AUTH='suzy_admin_auth';
-var changes={texts:{},imgs:{},alts:{},meta:{},styles:{},icons:{},gallery:null};
+var changes={texts:{},imgs:{},alts:{},meta:{},styles:{},icons:{},gallery:null,services:null,sections:null};
 var publishing=false,timer=null,rev=0;
 var curStyleKey=null;
-var galState=[];
+var galState=[],svcState=[],secState=[];
+var curSvcIconIdx=null;
 
 function sha256js(a){var mp=Math.pow,mw=mp(2,32),i,j,r='',w=[],al=a.length*8,h=[],k=[],pc=0,ic={};function rr(v,n){return(v>>>n)|(v<<(32-n));}for(var c=2;pc<64;c++){if(!ic[c]){for(i=0;i<313;i+=c)ic[i]=c;h[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}a+='\x80';while(a.length%64-56)a+='\x00';for(i=0;i<a.length;i++){j=a.charCodeAt(i);w[i>>2]|=j<<((3-i)%4)*8;}w[w.length]=((al/mw)|0);w[w.length]=al;for(j=0;j<w.length;){var x=w.slice(j,j+=16),o=h;h=h.slice(0,8);for(i=0;i<64;i++){var w15=x[i-15],w2=x[i-2],a0=h[0],e0=h[4];var t1=h[7]+(rr(e0,6)^rr(e0,11)^rr(e0,25))+((e0&h[5])^((~e0)&h[6]))+k[i]+(x[i]=(i<16)?x[i]:(x[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+x[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);var t2=(rr(a0,2)^rr(a0,13)^rr(a0,22))+((a0&h[1])^(a0&h[2])^(h[1]&h[2]));h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0;h.length=8;}for(i=0;i<8;i++)h[i]=(h[i]+o[i])|0;}for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255;r+=((b<16)?0:'')+b.toString(16);}return r;}
 function sha256(s){if(!(window.crypto&&crypto.subtle))return Promise.resolve(sha256js(s));return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');});}
 function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('on');},2600);}
 function token(){return localStorage.getItem(LS_TOKEN);}
-function hasChanges(){return Object.keys(changes.texts).length||Object.keys(changes.imgs).length||Object.keys(changes.alts).length||Object.keys(changes.meta).length||Object.keys(changes.styles).length||Object.keys(changes.icons).length||changes.gallery!==null;}
+function hasChanges(){return Object.keys(changes.texts).length||Object.keys(changes.imgs).length||Object.keys(changes.alts).length||Object.keys(changes.meta).length||Object.keys(changes.styles).length||Object.keys(changes.icons).length||changes.gallery!==null||changes.services!==null||changes.sections!==null;}
 function setStatus(txt,cls){var s=$('status');s.textContent=txt;s.className='chip '+(cls||'');}
 
 /* auth */
@@ -342,7 +406,7 @@ function setupEditing(){
   },true);
   fdoc.addEventListener('focus',function(e){
     var el=e.target.closest&&e.target.closest('[data-edit]');
-    if(el){curStyleKey=el.getAttribute('data-edit');showFmtBar(el);syncStylePanel(curStyleKey);syncStyleUI();}
+    if(el){curStyleKey=el.getAttribute('data-edit');showFmtBar(el);syncStylePanel(curStyleKey);syncStyleUI();autoOpenStylePanel();}
   },true);
   fdoc.addEventListener('blur',function(e){
     var el=e.target.closest&&e.target.closest('[data-edit]');
@@ -368,7 +432,24 @@ function setupEditing(){
   var md=fdoc.querySelector('meta[name=description]');$('setDesc').value=md?md.content:'';
   $('setTypes').value=Array.from(fdoc.querySelectorAll('#f-type option')).map(function(o){return o.textContent;}).join('\n');
   var ta=fdoc.getElementById('f-msg');$('setPlaceholder').value=ta?ta.getAttribute('placeholder')||'':'';
-  buildImgList();buildGalManager();
+  buildImgList();buildGalManager();buildSvcManager();buildSecManager();
+}
+
+/* ---- drag & drop reorder helper (used by svc and gal managers) ---- */
+function setupDragReorder(container, onReorder){
+  var dragIdx=null;
+  Array.from(container.children).forEach(function(row,i){
+    row.setAttribute('draggable','true');
+    row.style.cursor='grab';
+    row.addEventListener('dragstart',function(e){dragIdx=i;e.dataTransfer.effectAllowed='move';row.style.opacity='.4';});
+    row.addEventListener('dragend',function(){row.style.opacity='';dragIdx=null;});
+    row.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';});
+    row.addEventListener('drop',function(e){
+      e.preventDefault();
+      if(dragIdx===null||dragIdx===i)return;
+      onReorder(dragIdx,i);
+    });
+  });
 }
 
 /* styles */
@@ -423,6 +504,32 @@ function syncStyleUI(){
   $('fmtItalic').classList.toggle('on',s.fontStyle==='italic');
 }
 
+/* font loader */
+var loadedFonts={};
+function loadGoogleFont(family){
+  var name=family.replace(/['"]/g,'').split(',')[0].trim();
+  if(loadedFonts[name])return;
+  loadedFonts[name]=1;
+  var encoded=encodeURIComponent(name).replace(/%20/g,'+');
+  var url='https://fonts.googleapis.com/css2?family='+encoded+':wght@400;500;600;700&display=swap';
+  // Load in main window
+  var link=document.createElement('link');link.rel='stylesheet';link.href=url;document.head.appendChild(link);
+  // Load in iframe
+  if(fdoc){var link2=fdoc.createElement('link');link2.rel='stylesheet';link2.href=url;fdoc.head.appendChild(link2);}
+}
+window.applyStylePropFont=function(val){
+  if(val)loadGoogleFont(val);
+  window.applyStyleProp('fontFamily',val);
+  $('fmtFont').value=val;
+};
+
+/* auto-open drawer to style panel when text focused */
+function autoOpenStylePanel(){
+  $('drawer').classList.add('on');
+  // Scroll style section into view in drawer
+  var el=$('styleKeySelect');if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
 /* format bar */
 function showFmtBar(el){
   var bar=$('fmtBar');bar.style.display='flex';
@@ -434,7 +541,7 @@ function showFmtBar(el){
 function hideFmtBar(){$('fmtBar').style.display='none';}
 $('fmtColor').addEventListener('input',function(){window.applyStyleProp('color',this.value);});
 $('fmtSize').addEventListener('change',function(){if(this.value)window.applyStyleProp('fontSize',this.value+'rem');});
-$('fmtFont').addEventListener('change',function(){window.applyStyleProp('fontFamily',this.value);});
+$('fmtFont').addEventListener('change',function(){window.applyStylePropFont(this.value);});
 window.fmtToggle=function(prop,on,off){
   if(!curStyleKey)return;
   var cur=(changes.styles[curStyleKey]||{})[prop];
@@ -451,7 +558,138 @@ window.fmtToggle=function(prop,on,off){
 $('btnSettings').addEventListener('click',function(){$('drawer').classList.toggle('on');});
 $('btnView').addEventListener('click',function(){var m=frame.classList.toggle('mobile');$('btnView').textContent=m?'Bilgisayar':'Telefon';});
 
-/* gallery */
+/* ---- service cards ---- */
+var DEFAULT_ICONS=['<circle cx="12" cy="10" r="5.2"/><path d="M9.6 19h4.8M10.3 21.4h3.4" stroke-linecap="round"/><path d="M12 3.4V1.6M4.6 6.2 3.3 4.9M19.4 6.2l1.3-1.3" stroke-linecap="round"/>','<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>','<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/>','<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>','<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><line x1="2" y1="12" x2="22" y2="12"/>','<path d="M3 21c0-3.6 2.9-5.6 6-5.6s6 2 6 5.6"/><circle cx="9" cy="8.4" r="3.3"/>'];
+function makeSvcIconHtml(innerSvg,key){return '<svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" data-icon-key="'+key+'">'+innerSvg+'</svg>';}
+function buildSvcManager(){
+  if(!fdoc)return;svcState=[];
+  fdoc.querySelectorAll('.svc-card').forEach(function(card,i){
+    var icon=card.querySelector('.svc-icon');
+    var h3=card.querySelector('h3');var p=card.querySelector('p');
+    svcState.push({key:'svc'+(i+1),iconInner:icon?icon.innerHTML:DEFAULT_ICONS[i%6],title:h3?h3.textContent:'Hizmet',desc:p?p.textContent:'Açıklama.'});
+  });
+  renderSvcManager();
+}
+function renderSvcManager(){
+  var box=$('svcManager');box.innerHTML='';
+  svcState.forEach(function(s,i){
+    var d=document.createElement('div');d.className='gal-row';
+    d.innerHTML='<span class="drag-handle" title="Sürükleyerek sırala" style="font-size:1rem">⠿</span>'+
+      '<div class="svc-icon-cell" title="İkon değiştir" onclick="openIconPickerForSvc('+i+')">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">'+s.iconInner+'</svg>'+
+      '</div>'+
+      '<div class="gal-info">'+
+        '<input data-sv="title" data-idx="'+i+'" value="'+escH(s.title)+'" placeholder="Başlık" style="margin-bottom:4px">'+
+        '<input data-sv="desc" data-idx="'+i+'" value="'+escH(s.desc)+'" placeholder="Açıklama">'+
+        '<div class="gal-btns" style="margin-top:3px"><button class="tag-btn" data-sv="del" data-idx="'+i+'" style="color:var(--bad)">Sil</button></div>'+
+      '</div>';
+    box.appendChild(d);
+  });
+  setupDragReorder(box,function(from,to){
+    var item=svcState.splice(from,1)[0];svcState.splice(to,0,item);
+    renderSvcManager();commitSvc();
+  });
+  box.querySelectorAll('input[data-sv]').forEach(function(inp){
+    inp.addEventListener('input',function(){svcState[parseInt(this.dataset.idx)][this.dataset.sv]=this.value;commitSvc();});
+  });
+  box.querySelectorAll('button[data-sv]').forEach(function(btn){
+    btn.addEventListener('click',function(){var idx=parseInt(this.dataset.idx);svcState.splice(idx,1);renderSvcManager();commitSvc();});
+  });
+}
+window.addSvcItem=function(){
+  var n=svcState.length;
+  svcState.push({key:'svc'+(n+1),iconInner:DEFAULT_ICONS[n%6],title:'Yeni Hizmet',desc:'Hizmet açıklaması buraya gelecek.'});
+  renderSvcManager();commitSvc();
+};
+window.openIconPickerForSvc=function(svcIdx){
+  curSvcIconIdx=svcIdx;curIconKey=null;
+  var grid=$('iconGrid');grid.innerHTML='';
+  ICONS.forEach(function(ic,i){
+    var d=document.createElement('div');d.className='icon-opt';
+    d.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">'+ic.s+'</svg><span>'+ic.n+'</span>';
+    d.addEventListener('click',function(){grid.querySelectorAll('.icon-opt').forEach(function(x){x.classList.remove('sel');});d.classList.add('sel');selIconIdx=i;});
+    grid.appendChild(d);
+  });
+  $('iconModal').classList.add('on');
+};
+function commitSvc(){
+  changes.services=JSON.parse(JSON.stringify(svcState));
+  if(!fdoc)return;
+  var grid=fdoc.querySelector('.svc-grid');if(!grid)return;
+  var n=svcState.length;
+  grid.innerHTML=svcState.map(function(s,i){
+    var span=n<=4?3:(i%3===0?4:2);
+    var iconHtml=makeSvcIconHtml(s.iconInner,s.key);
+    return '<div class="svc-card"><div style="cursor:pointer" onclick="parent.openIconPickerForSvc('+i+')">'+iconHtml+'</div>'+
+      '<h3 data-edit="'+s.key+'.title">'+escH(s.title)+'</h3>'+
+      '<p data-edit="'+s.key+'.desc">'+escH(s.desc)+'</p></div>';
+  }).join('');
+  // re-attach contenteditable
+  grid.querySelectorAll('[data-edit]').forEach(function(el){el.setAttribute('contenteditable','true');el.setAttribute('spellcheck','false');});
+  touched();
+}
+
+/* ---- sections ---- */
+var SEC_DEFS=[
+  {id:'heroSection',label:'Hero (Ana görsel)'},
+  {id:'about',label:'Hakkımızda'},
+  {id:'services',label:'Hizmetler'},
+  {id:'gallery',label:'Galeri / Portfolyo'},
+  {id:'contact',label:'İletişim'}
+];
+function buildSecManager(){
+  if(!fdoc)return;secState=[];
+  SEC_DEFS.forEach(function(def){
+    var el=fdoc.getElementById(def.id)||fdoc.querySelector('section#'+def.id)||fdoc.querySelector('[id="'+def.id+'"]');
+    secState.push({id:def.id,label:def.label,visible:el?(el.style.display!=='none'):true});
+  });
+  renderSecManager();
+}
+function renderSecManager(){
+  var box=$('secManager');box.innerHTML='';
+  secState.forEach(function(s,i){
+    var d=document.createElement('div');d.className='sec-row';
+    d.innerHTML='<span class="drag-handle" title="Sürükleyerek sırala" style="font-size:1rem;cursor:grab">⠿</span>'+
+      '<span class="sec-name">'+s.label+'</span>'+
+      '<button class="vis-btn '+(s.visible?'on':'off')+'" data-si="'+i+'">'+(s.visible?'Görünür':'Gizli')+'</button>';
+    box.appendChild(d);
+  });
+  setupDragReorder(box,function(from,to){
+    var item=secState.splice(from,1)[0];secState.splice(to,0,item);
+    renderSecManager();commitSec();
+  });
+  box.querySelectorAll('.vis-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var i=parseInt(this.dataset.si);
+      secState[i].visible=!secState[i].visible;
+      renderSecManager();commitSec();
+    });
+  });
+}
+function commitSec(){
+  changes.sections=JSON.parse(JSON.stringify(secState));
+  if(!fdoc)return;
+  // Apply visibility in iframe
+  secState.forEach(function(s){
+    var el=fdoc.getElementById(s.id);
+    if(el)el.style.display=s.visible?'':'none';
+  });
+  // Apply order in iframe
+  var main=fdoc.querySelector('main');if(!main)return;
+  var marq=fdoc.querySelector('.marquee-wrap');
+  var ordered=[];
+  secState.forEach(function(s){
+    var el=fdoc.getElementById(s.id);if(el)ordered.push(el);
+  });
+  if(marq&&ordered.length>1){
+    // insert marquee after hero
+    main.appendChild(marq);
+  }
+  ordered.forEach(function(el){main.appendChild(el);});
+  touched();
+}
+
+/* ---- gallery */
 function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 function buildGalManager(){
   if(!fdoc)return;galState=[];
@@ -596,13 +834,22 @@ function openIconPicker(key){
 }
 $('iconCancel').addEventListener('click',function(){$('iconModal').classList.remove('on');});
 $('iconApply').addEventListener('click',function(){
-  if(selIconIdx===null||!curIconKey)return;
+  if(selIconIdx===null)return;
   var ic=ICONS[selIconIdx];
-  var newSvgHtml='<svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" data-icon-key="'+curIconKey+'">'+ic.s+'</svg>';
-  changes.icons[curIconKey]=newSvgHtml;
-  var el=fdoc.querySelector('[data-icon-key="'+curIconKey+'"]');
-  if(el){var tmp=fdoc.createElement('div');tmp.innerHTML=newSvgHtml;var newEl=tmp.firstChild;newEl.addEventListener('click',function(e){e.stopPropagation();openIconPicker(curIconKey);});el.parentNode.replaceChild(newEl,el);}
-  $('iconModal').classList.remove('on');touched();
+  if(curSvcIconIdx!==null){
+    // updating a service card icon
+    svcState[curSvcIconIdx].iconInner=ic.s;
+    renderSvcManager();commitSvc();
+    curSvcIconIdx=null;
+  } else if(curIconKey){
+    // updating a standalone svc icon in iframe directly
+    var newSvgHtml='<svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" data-icon-key="'+curIconKey+'">'+ic.s+'</svg>';
+    changes.icons[curIconKey]=newSvgHtml;
+    var el=fdoc.querySelector('[data-icon-key="'+curIconKey+'"]');
+    if(el){var tmp=fdoc.createElement('div');tmp.innerHTML=newSvgHtml;var newEl=tmp.firstChild;newEl.addEventListener('click',function(e){e.stopPropagation();openIconPicker(curIconKey);});el.parentNode.replaceChild(newEl,el);}
+    touched();
+  }
+  $('iconModal').classList.remove('on');
 });
 
 /* publish */
@@ -651,6 +898,33 @@ function applyChanges(htmlText,ch,imgPaths){
     if(!el){var num=parseInt(k.replace('svc',''));el=doc.querySelectorAll('.svc-icon')[num-1];}
     if(el){var tmp=doc.createElement('div');tmp.innerHTML=ch.icons[k];el.parentNode.replaceChild(tmp.firstChild,el);}
   });
+  /* services */
+  if(ch.services){
+    var svcGrid=doc.querySelector('.svc-grid');
+    if(svcGrid){
+      var sn=ch.services.length;
+      svcGrid.innerHTML=ch.services.map(function(s,i){
+        var span=sn<=4?3:(i%3===0?4:2);
+        return '<div class="svc-card"><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">'+s.iconInner+'</svg>'+
+          '<h3 data-edit="'+s.key+'.title">'+escH(s.title)+'</h3>'+
+          '<p data-edit="'+s.key+'.desc">'+escH(s.desc)+'</p></div>';
+      }).join('');
+    }
+  }
+  /* sections visibility and order */
+  if(ch.sections){
+    var mainEl=doc.querySelector('main');
+    if(mainEl){
+      var marqEl=doc.querySelector('.marquee-wrap');
+      var ordered2=[];
+      ch.sections.forEach(function(s){
+        var el=doc.getElementById(s.id);
+        if(el){if(!s.visible)el.style.display='none';else el.style.removeProperty('display');ordered2.push(el);}
+      });
+      if(marqEl)mainEl.appendChild(marqEl);
+      ordered2.forEach(function(el){mainEl.appendChild(el);});
+    }
+  }
   /* gallery */
   if(ch.gallery){
     var grid=doc.querySelector('.gal-grid');
@@ -681,7 +955,7 @@ function publish(attempt){
   if(publishing){clearTimeout(timer);timer=setTimeout(publish,1500);return;}
   if(!hasChanges()){setStatus('Değişiklik yok');$('btnPublish').disabled=true;return;}
   publishing=true;setStatus('Yayınlanıyor…','dirty');
-  var snap={rev:rev,texts:Object.assign({},changes.texts),alts:Object.assign({},changes.alts),meta:Object.assign({},changes.meta),imgs:Object.assign({},changes.imgs),styles:JSON.parse(JSON.stringify(changes.styles)),icons:Object.assign({},changes.icons),gallery:changes.gallery?JSON.parse(JSON.stringify(changes.gallery)):null};
+  var snap={rev:rev,texts:Object.assign({},changes.texts),alts:Object.assign({},changes.alts),meta:Object.assign({},changes.meta),imgs:Object.assign({},changes.imgs),styles:JSON.parse(JSON.stringify(changes.styles)),icons:Object.assign({},changes.icons),gallery:changes.gallery?JSON.parse(JSON.stringify(changes.gallery)):null,services:changes.services?JSON.parse(JSON.stringify(changes.services)):null,sections:changes.sections?JSON.parse(JSON.stringify(changes.sections)):null};
   var stamp=Date.now(),imgPaths={};
   Object.keys(snap.imgs).forEach(function(k){imgPaths[k]='uploads/'+k+'-'+stamp+'.'+snap.imgs[k].ext;});
   gh('/contents/index.html?ref='+CFG.branch,{accept:'application/vnd.github.raw+json',raw:true}).then(function(src){
@@ -696,6 +970,8 @@ function publish(attempt){
     if(JSON.stringify(changes.styles)===JSON.stringify(snap.styles))changes.styles={};
     if(JSON.stringify(changes.icons)===JSON.stringify(snap.icons))changes.icons={};
     if(JSON.stringify(changes.gallery)===JSON.stringify(snap.gallery))changes.gallery=null;
+    if(JSON.stringify(changes.services)===JSON.stringify(snap.services))changes.services=null;
+    if(JSON.stringify(changes.sections)===JSON.stringify(snap.sections))changes.sections=null;
     publishing=false;
     if(hasChanges()){setStatus('Değişiklik var…','dirty');clearTimeout(timer);timer=setTimeout(publish,1200);}
     else{setStatus('Yayınlandı ✓','ok');$('btnPublish').disabled=true;}
