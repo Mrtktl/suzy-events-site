@@ -463,13 +463,13 @@ function applyStylesToFrame(){
 function buildStyleRules(stylesObj){
   return Object.keys(stylesObj).map(function(k){
     var s=stylesObj[k];var props=[];
-    if(s.color)props.push('color:'+s.color);
-    if(s.fontSize)props.push('font-size:'+s.fontSize);
-    if(s.fontFamily)props.push('font-family:'+s.fontFamily);
-    if(s.fontWeight)props.push('font-weight:'+s.fontWeight);
-    if(s.fontStyle)props.push('font-style:'+s.fontStyle);
-    if(s.letterSpacing)props.push('letter-spacing:'+s.letterSpacing);
-    if(s.lineHeight)props.push('line-height:'+s.lineHeight);
+    if(s.color)props.push('color:'+s.color+' !important');
+    if(s.fontSize)props.push('font-size:'+s.fontSize+' !important');
+    if(s.fontFamily)props.push('font-family:'+s.fontFamily+' !important');
+    if(s.fontWeight)props.push('font-weight:'+s.fontWeight+' !important');
+    if(s.fontStyle)props.push('font-style:'+s.fontStyle+' !important');
+    if(s.letterSpacing)props.push('letter-spacing:'+s.letterSpacing+' !important');
+    if(s.lineHeight)props.push('line-height:'+s.lineHeight+' !important');
     return props.length?'[data-edit="'+k+'"]{'+props.join(';')+'}':'';
   }).filter(Boolean).join('\n');
 }
