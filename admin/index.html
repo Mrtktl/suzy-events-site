@@ -16,8 +16,10 @@
   .btn{background:var(--brass);color:#1B140D;border:0;border-radius:4px;padding:9px 16px;font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
   .btn:hover{background:var(--brass2)} .btn[disabled]{opacity:.5;cursor:default}
   .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)} .btn.ghost:hover{border-color:var(--brass);color:var(--brass2)}
-  input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:10px 12px;font:inherit;outline:none}
-  input:focus,textarea:focus{border-color:var(--brass)}
+  .btn.sm{padding:5px 10px;font-size:.74rem}
+  input,textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:10px 12px;font:inherit;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--brass)}
+  select option{background:var(--bg);color:var(--ink)}
   label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:14px 0 6px}
   .screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:var(--bg);z-index:50}
   .screen.on{display:flex}
@@ -28,34 +30,62 @@
   ol.steps{color:var(--soft);font-size:.86rem;padding-left:18px;margin:0 0 6px} ol.steps li{margin:5px 0} ol.steps b{color:var(--ink)}
   a{color:var(--brass2)}
   #app{display:none;height:100%;flex-direction:column} #app.on{display:flex}
-  .top{height:56px;flex:none;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line)}
-  .top .brand{font-weight:700;margin-right:auto;display:flex;align-items:center;gap:10px}
-  .top .brand img{width:28px;height:28px;border-radius:50%}
-  .top .hint{color:var(--faint);font-size:.8rem}
-  .chip{font-size:.8rem;padding:5px 11px;border-radius:20px;border:1px solid var(--line);color:var(--soft);white-space:nowrap}
+  .top{height:56px;flex:none;display:flex;align-items:center;gap:7px;padding:0 10px;background:var(--panel);border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden}
+  .top .brand{font-weight:700;margin-right:4px;display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:.88rem;flex:none}
+  .top .brand img{width:26px;height:26px;border-radius:50%;flex:none}
+  .chip{font-size:.78rem;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--soft);white-space:nowrap;flex:none}
   .chip.dirty{border-color:var(--brass);color:var(--brass2)} .chip.ok{border-color:var(--ok);color:var(--ok)} .chip.bad{border-color:var(--bad);color:var(--bad)}
+  .sep{width:1px;height:24px;background:var(--line);flex:none;margin:0 1px}
+  .secbtn{background:transparent;border:1px solid transparent;color:var(--faint);border-radius:4px;padding:4px 8px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;flex:none}
+  .secbtn:hover{color:var(--brass2);border-color:var(--line)}
   .stage{flex:1;min-height:0;display:flex;justify-content:center;background:#0c0907;position:relative}
   iframe{border:0;height:100%;width:100%;background:#fff;transition:width .2s}
   iframe.mobile{width:390px;box-shadow:0 0 0 1px var(--line)}
-  .drawer{position:absolute;top:0;right:0;bottom:0;width:360px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);padding:18px;overflow:auto;transform:translateX(100%);transition:transform .2s;z-index:5}
+  .drawer{position:absolute;top:0;right:0;bottom:0;width:360px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);padding:16px;overflow:auto;transform:translateX(100%);transition:transform .2s;z-index:5}
   .drawer.on{transform:none}
-  .drawer h3{margin:4px 0 2px;font-size:1rem} .drawer .sub{color:var(--faint);font-size:.8rem;margin:0 0 8px}
-  .imglist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-  .imgitem{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px;cursor:pointer;text-align:center;font-size:.74rem;color:var(--soft)}
-  .imgitem:hover{border-color:var(--brass)} .imgitem img{width:100%;height:70px;object-fit:cover;border-radius:3px;display:block;margin-bottom:5px}
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:60;padding:20px}
-  .modal.on{display:flex} .modal .card{max-width:460px}
-  .modal img.prev{width:100%;max-height:220px;object-fit:cover;border-radius:4px;margin-bottom:6px}
-  .row{display:flex;gap:10px;margin-top:18px;justify-content:flex-end}
+  .drawer h3{margin:4px 0 2px;font-size:.95rem} .drawer .sub{color:var(--faint);font-size:.78rem;margin:0 0 8px}
+  .imglist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .imgitem{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:5px;cursor:pointer;text-align:center;font-size:.7rem;color:var(--soft)}
+  .imgitem:hover{border-color:var(--brass)} .imgitem img{width:100%;height:60px;object-fit:cover;border-radius:3px;display:block;margin-bottom:4px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
+  .modal.on{display:flex} .modal .card{max-width:480px}
+  .modal img.prev{width:100%;max-height:200px;object-fit:cover;border-radius:4px;margin-bottom:6px}
+  .row{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
   .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 18px;border-radius:6px;font-size:.85rem;z-index:80;display:none}
   .toast.on{display:block}
-  @media(max-width:1180px){.top .hint{display:none}.top .btn{padding:8px 10px;font-size:.72rem}.top .brand{font-size:.9rem}}
+  /* Format toolbar */
+  #fmtBar{position:fixed;z-index:200;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:5px 8px;align-items:center;gap:5px;box-shadow:0 4px 20px rgba(0,0,0,.5);display:none}
+  #fmtBar select,#fmtBar input[type=number]{width:auto;padding:4px 6px;font-size:.76rem;border-radius:4px;background:var(--bg)}
+  #fmtBar select{max-width:110px}
+  #fmtBar input[type=number]{width:52px;text-align:center}
+  #fmtBar input[type=color]{width:30px;height:28px;padding:1px;border-radius:4px;cursor:pointer;background:transparent;border:1px solid var(--line)}
+  .fmt-btn{background:transparent;border:1px solid var(--line);color:var(--soft);border-radius:3px;width:28px;height:28px;font-size:.8rem;display:flex;align-items:center;justify-content:center;padding:0}
+  .fmt-btn:hover,.fmt-btn.on{background:var(--brass);color:#1B140D;border-color:var(--brass)}
+  .fmt-sep{width:1px;height:20px;background:var(--line);flex:none}
+  /* Gallery manager */
+  .gal-manager{margin-top:8px}
+  .gal-row{display:flex;gap:6px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px;margin-bottom:6px}
+  .gal-row img{width:48px;height:36px;object-fit:cover;border-radius:3px;flex:none}
+  .gal-row .gal-info{flex:1;min-width:0}
+  .gal-row .gal-info input{padding:3px 6px;font-size:.76rem;margin-bottom:3px}
+  .gal-row .gal-btns{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
+  .tag-btn{background:transparent;border:1px solid var(--line);color:var(--faint);border-radius:3px;padding:2px 6px;font-size:.68rem;cursor:pointer}
+  .tag-btn.on{background:var(--brass);color:#1B140D;border-color:var(--brass)}
+  /* Icon picker */
+  .icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px;max-height:280px;overflow-y:auto}
+  .icon-opt{border:1px solid var(--line);border-radius:4px;padding:8px 4px;cursor:pointer;text-align:center;background:var(--bg)}
+  .icon-opt:hover,.icon-opt.sel{border-color:var(--brass);background:var(--panel2)}
+  .icon-opt svg{width:22px;height:22px;color:var(--brass);display:block;margin:0 auto 3px}
+  .icon-opt span{font-size:.6rem;color:var(--faint);display:block}
+  /* Style panel */
+  .style-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .style-row input[type=number]{padding:7px 10px}
 </style>
 </head>
 <body>
 
 <!-- PIN -->
-<div class="screen on" id="gate">
+<div class="screen" id="gate">
   <form class="card" id="pinForm" autocomplete="off">
     <h1>Suzy Events Yönetim</h1>
     <p>Devam etmek için şifreyi girin.</p>
@@ -65,18 +95,18 @@
   </form>
 </div>
 
-<!-- GitHub token (first time on a device) -->
+<!-- GitHub token -->
 <div class="screen" id="tokenScreen">
   <form class="card" id="tokenForm" style="max-width:520px" autocomplete="off">
     <h1>Yayın izni (tek seferlik)</h1>
-    <p>Değişikliklerin siteye otomatik yazılabilmesi için GitHub'dan bir erişim anahtarı oluşturup buraya yapıştırın. Bu cihazda saklanır, başka kimseyle paylaşılmaz.</p>
-    <div class="err" id="httpWarn" style="display:none;margin:0 0 12px">⚠ Bu sayfa şu an güvenli (HTTPS) bağlantıda değil. Anahtarı girmeden önce sitenin HTTPS sertifikasının tamamlanmasını beklemeniz önerilir.</div>
+    <p>GitHub'dan bir erişim anahtarı oluşturup buraya yapıştırın. Bu cihazda saklanır.</p>
+    <div class="err" id="httpWarn" style="display:none;margin:0 0 12px">⚠ Güvenli bağlantı yok. HTTPS sertifikası tamamlandıktan sonra giriş önerilir.</div>
     <ol class="steps">
-      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> sayfasını açın.</li>
+      <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
       <li><b>Token name:</b> suzy-admin &nbsp; <b>Expiration:</b> No expiration (veya 1 yıl)</li>
       <li><b>Repository access → Only select repositories →</b> <code>suzy-events-site</code></li>
       <li><b>Permissions → Repository permissions → Contents:</b> <code>Read and write</code></li>
-      <li><b>Generate token</b> deyip çıkan <code>github_pat_…</code> kodunu kopyalayın.</li>
+      <li><b>Generate token</b> deyip <code>github_pat_…</code> kodunu kopyalayın.</li>
     </ol>
     <label>Erişim anahtarı</label>
     <input id="tokenInput" type="password" placeholder="github_pat_...">
@@ -88,29 +118,102 @@
 <!-- App -->
 <div id="app">
   <div class="top">
-    <div class="brand"><img src="../uploads/logo.jpg" alt=""> Suzy Events — Yönetim</div>
-    <span class="hint">Sayfadaki yazıya tıklayıp doğrudan düzenleyin</span>
+    <div class="brand"><img src="../uploads/logo.jpg" alt=""> Suzy Events</div>
+    <div class="sep"></div>
+    <button class="secbtn" onclick="scrollSec('top')">Hero</button>
+    <button class="secbtn" onclick="scrollSec('about')">Hakkımızda</button>
+    <button class="secbtn" onclick="scrollSec('services')">Hizmetler</button>
+    <button class="secbtn" onclick="scrollSec('gallery')">Galeri</button>
+    <button class="secbtn" onclick="scrollSec('contact')">İletişim</button>
+    <div class="sep"></div>
     <span class="chip" id="status">Değişiklik yok</span>
-    <button class="btn ghost" id="btnView" title="Telefon / Bilgisayar görünümü">Telefon</button>
-    <button class="btn ghost" id="btnSettings">Ayarlar &amp; Görseller</button>
-    <button class="btn" id="btnPublish" disabled>Şimdi Yayınla</button>
-    <button class="btn ghost" id="btnLogout">Çıkış</button>
+    <button class="btn ghost sm" id="btnView">Telefon</button>
+    <button class="btn ghost sm" id="btnSettings">Ayarlar</button>
+    <button class="btn sm" id="btnPublish" disabled>Yayınla</button>
+    <button class="btn ghost sm" id="btnLogout">Çıkış</button>
   </div>
   <div class="stage">
     <iframe id="frame" title="Site"></iframe>
     <aside class="drawer" id="drawer">
-      <h3>Sayfa ayarları</h3>
+      <h3>Sayfa bilgileri</h3>
       <p class="sub">Tarayıcı sekmesinde ve Google'da görünen bilgiler.</p>
       <label>Sayfa başlığı</label><input id="setTitle">
       <label>Açıklama (Google)</label><textarea id="setDesc" rows="3"></textarea>
-      <label>Form: etkinlik türleri (her satır bir seçenek)</label><textarea id="setTypes" rows="5"></textarea>
+      <label>Form: etkinlik türleri (her satır bir seçenek)</label><textarea id="setTypes" rows="4"></textarea>
       <label>Form: mesaj kutusu ipucu</label><input id="setPlaceholder">
-      <h3 style="margin-top:22px">Görseller</h3>
+
+      <h3 style="margin-top:20px">Stil Düzenleyici</h3>
+      <p class="sub">Bir metne tıklayınca otomatik seçilir. Aşağıdan da öğe seçebilirsiniz.</p>
+      <label>Seçili öğe</label>
+      <select id="styleKeySelect" onchange="loadStyleKey(this.value)"></select>
+      <div class="style-row" style="margin-top:8px">
+        <div><label>Metin rengi</label><input type="color" id="stylePropColor" oninput="applyStyleProp('color',this.value)" style="height:38px;padding:2px"></div>
+        <div><label>Boyut (rem)</label><input type="number" id="stylePropSize" min="0.5" max="8" step="0.1" oninput="applyStyleProp('fontSize',this.value+'rem')"></div>
+      </div>
+      <div class="style-row">
+        <div>
+          <label>Font ailesi</label>
+          <select id="stylePropFont" onchange="applyStyleProp('fontFamily',this.value)">
+            <option value="">Varsayılan</option>
+            <option value="'Fraunces',serif">Fraunces (serif)</option>
+            <option value="'Manrope',sans-serif">Manrope (sans)</option>
+            <option value="Georgia,serif">Georgia</option>
+            <option value="Arial,sans-serif">Arial</option>
+            <option value="'Courier New',monospace">Courier</option>
+          </select>
+        </div>
+        <div>
+          <label>Kalınlık</label>
+          <select id="stylePropWeight" onchange="applyStyleProp('fontWeight',this.value)">
+            <option value="">Varsayılan</option>
+            <option value="300">İnce (300)</option>
+            <option value="400">Normal (400)</option>
+            <option value="500">Orta (500)</option>
+            <option value="600">Yarı Kalın (600)</option>
+            <option value="700">Kalın (700)</option>
+            <option value="800">Çok Kalın (800)</option>
+          </select>
+        </div>
+      </div>
+      <div class="style-row">
+        <div><label>Harf aralığı (em)</label><input type="number" id="stylePropLS" min="-0.1" max="0.5" step="0.01" oninput="applyStyleProp('letterSpacing',this.value+'em')"></div>
+        <div><label>Satır yüksekliği</label><input type="number" id="stylePropLH" min="1" max="3" step="0.1" oninput="applyStyleProp('lineHeight',this.value)"></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:8px">
+        <button class="btn ghost sm" onclick="toggleStyleProp('fontStyle','italic','normal')">İtalik aç/kapat</button>
+        <button class="btn ghost sm" onclick="clearStyle()">Stili sıfırla</button>
+      </div>
+
+      <h3 style="margin-top:20px">Galeri Yönetimi</h3>
+      <p class="sub">Fotoğraf ekle/çıkar, geniş veya yüksek yap.</p>
+      <div class="gal-manager" id="galManager"></div>
+      <button class="btn ghost sm" style="width:100%;margin-top:8px" onclick="addGalItem()">+ Fotoğraf Ekle</button>
+
+      <h3 style="margin-top:20px">Görseller</h3>
       <p class="sub">Değiştirmek istediğinize tıklayın.</p>
       <div class="imglist" id="imglist"></div>
-      <p class="sub" style="margin-top:22px"><a href="#" id="forgetToken">Bu cihazdaki yayın anahtarını sil</a></p>
+      <p class="sub" style="margin-top:20px"><a href="#" id="forgetToken">Bu cihazdaki yayın anahtarını sil</a></p>
     </aside>
   </div>
+</div>
+
+<!-- Format toolbar (floating) -->
+<div id="fmtBar">
+  <select id="fmtFont" title="Font">
+    <option value="">Font</option>
+    <option value="'Fraunces',serif">Fraunces</option>
+    <option value="'Manrope',sans-serif">Manrope</option>
+    <option value="Georgia,serif">Georgia</option>
+    <option value="Arial,sans-serif">Arial</option>
+  </select>
+  <input type="number" id="fmtSize" min="0.5" max="8" step="0.1" placeholder="rem" title="Boyut (rem)" style="width:52px">
+  <div class="fmt-sep"></div>
+  <button class="fmt-btn" id="fmtBold" title="Kalın" onclick="fmtToggle('fontWeight','700','400')"><b>B</b></button>
+  <button class="fmt-btn" id="fmtItalic" title="İtalik" onclick="fmtToggle('fontStyle','italic','normal')"><i>I</i></button>
+  <div class="fmt-sep"></div>
+  <input type="color" id="fmtColor" title="Renk">
+  <div class="fmt-sep"></div>
+  <button class="fmt-btn" title="Stili kaldır" onclick="clearStyle()" style="width:auto;padding:0 6px;font-size:.68rem">✕</button>
 </div>
 
 <!-- Image modal -->
@@ -120,292 +223,492 @@
     <p>Yeni bir fotoğraf seçin; otomatik küçültülüp yüklenir.</p>
     <img class="prev" id="imgPrev" alt="">
     <input type="file" id="imgFile" accept="image/jpeg,image/png,image/webp">
-    <label>Alt metin (görseli tarif eden kısa yazı)</label>
-    <input id="imgAlt">
+    <label>Alt metin</label><input id="imgAlt">
     <div class="err" id="imgErr"></div>
     <div class="row"><button class="btn ghost" id="imgCancel">Vazgeç</button><button class="btn" id="imgApply">Uygula</button></div>
   </div>
 </div>
+
+<!-- Icon picker modal -->
+<div class="modal" id="iconModal">
+  <div class="card" style="max-width:500px">
+    <h1>İkon Seç</h1>
+    <p>Hizmet kartı için bir ikon seçin.</p>
+    <div class="icon-grid" id="iconGrid"></div>
+    <div class="row">
+      <button class="btn ghost" id="iconCancel">Vazgeç</button>
+      <button class="btn" id="iconApply">Uygula</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 (function(){
-  'use strict';
-  var CFG = { owner:'Mrtktl', repo:'suzy-events-site', branch:'main', pinHash:'826400d71c906875cc4a530d575a855e138f391b974305ae3b5f5b0f23075aca' };
-  var $ = function(id){ return document.getElementById(id); };
-  var LS_TOKEN = 'suzy_admin_token', SS_AUTH = 'suzy_admin_auth';
+'use strict';
+var CFG={owner:'Mrtktl',repo:'suzy-events-site',branch:'main',pinHash:'826400d71c906875cc4a530d575a855e138f391b974305ae3b5f5b0f23075aca'};
+var $=function(id){return document.getElementById(id);};
+var LS_TOKEN='suzy_admin_token',SS_AUTH='suzy_admin_auth';
+var changes={texts:{},imgs:{},alts:{},meta:{},styles:{},icons:{},gallery:null};
+var publishing=false,timer=null,rev=0;
+var curStyleKey=null;
+var galState=[];
 
-  /* ---------- state ---------- */
-  var changes = { texts:{}, imgs:{}, alts:{}, meta:{} };   // imgs[key] = {blob, ext, url}
-  var publishing = false, timer = null, rev = 0;
+function sha256js(a){var mp=Math.pow,mw=mp(2,32),i,j,r='',w=[],al=a.length*8,h=[],k=[],pc=0,ic={};function rr(v,n){return(v>>>n)|(v<<(32-n));}for(var c=2;pc<64;c++){if(!ic[c]){for(i=0;i<313;i+=c)ic[i]=c;h[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}a+='\x80';while(a.length%64-56)a+='\x00';for(i=0;i<a.length;i++){j=a.charCodeAt(i);w[i>>2]|=j<<((3-i)%4)*8;}w[w.length]=((al/mw)|0);w[w.length]=al;for(j=0;j<w.length;){var x=w.slice(j,j+=16),o=h;h=h.slice(0,8);for(i=0;i<64;i++){var w15=x[i-15],w2=x[i-2],a0=h[0],e0=h[4];var t1=h[7]+(rr(e0,6)^rr(e0,11)^rr(e0,25))+((e0&h[5])^((~e0)&h[6]))+k[i]+(x[i]=(i<16)?x[i]:(x[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+x[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);var t2=(rr(a0,2)^rr(a0,13)^rr(a0,22))+((a0&h[1])^(a0&h[2])^(h[1]&h[2]));h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0;h.length=8;}for(i=0;i<8;i++)h[i]=(h[i]+o[i])|0;}for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255;r+=((b<16)?0:'')+b.toString(16);}return r;}
+function sha256(s){if(!(window.crypto&&crypto.subtle))return Promise.resolve(sha256js(s));return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');});}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('on');},2600);}
+function token(){return localStorage.getItem(LS_TOKEN);}
+function hasChanges(){return Object.keys(changes.texts).length||Object.keys(changes.imgs).length||Object.keys(changes.alts).length||Object.keys(changes.meta).length||Object.keys(changes.styles).length||Object.keys(changes.icons).length||changes.gallery!==null;}
+function setStatus(txt,cls){var s=$('status');s.textContent=txt;s.className='chip '+(cls||'');}
 
-  /* ---------- helpers ---------- */
-  function sha256js(a){ /* pure-JS SHA-256 (ASCII) — fallback for non-HTTPS pages where crypto.subtle is unavailable */
-    var mp=Math.pow,mw=mp(2,32),i,j,r='',w=[],al=a.length*8,h=[],k=[],pc=0,ic={};
-    function rr(v,n){return (v>>>n)|(v<<(32-n));}
-    for(var c=2;pc<64;c++){ if(!ic[c]){ for(i=0;i<313;i+=c)ic[i]=c; h[pc]=(mp(c,.5)*mw)|0; k[pc++]=(mp(c,1/3)*mw)|0; } }
-    a+='\x80'; while(a.length%64-56)a+='\x00';
-    for(i=0;i<a.length;i++){ j=a.charCodeAt(i); w[i>>2]|=j<<((3-i)%4)*8; }
-    w[w.length]=((al/mw)|0); w[w.length]=al;
-    for(j=0;j<w.length;){
-      var x=w.slice(j,j+=16),o=h; h=h.slice(0,8);
-      for(i=0;i<64;i++){
-        var w15=x[i-15],w2=x[i-2],a0=h[0],e0=h[4];
-        var t1=h[7]+(rr(e0,6)^rr(e0,11)^rr(e0,25))+((e0&h[5])^((~e0)&h[6]))+k[i]+(x[i]=(i<16)?x[i]:(x[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+x[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);
-        var t2=(rr(a0,2)^rr(a0,13)^rr(a0,22))+((a0&h[1])^(a0&h[2])^(h[1]&h[2]));
-        h=[(t1+t2)|0].concat(h); h[4]=(h[4]+t1)|0; h.length=8;
-      }
-      for(i=0;i<8;i++)h[i]=(h[i]+o[i])|0;
+/* auth */
+function showApp(){
+  if(location.protocol==='http:'&&!/^(localhost|127\.0\.0\.1)$/.test(location.hostname))$('httpWarn').style.display='block';
+  $('gate').classList.remove('on');
+  if(!token()){$('tokenScreen').classList.add('on');return;}
+  $('tokenScreen').classList.remove('on');$('app').classList.add('on');loadFrame();
+}
+$('pinForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  sha256('suzy-admin:'+$('pin').value).then(function(h){
+    if(h===CFG.pinHash){sessionStorage.setItem(SS_AUTH,'1');$('pinErr').textContent='';showApp();}
+    else{$('pinErr').textContent='Şifre hatalı.';$('pin').value='';}
+  });
+});
+$('tokenForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var t=$('tokenInput').value.trim();if(!t)return;
+  $('tokenErr').textContent='Kontrol ediliyor…';
+  fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo,{headers:{Authorization:'Bearer '+t,Accept:'application/vnd.github+json'}})
+    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
+    .then(function(r){
+      if(!r.ok)throw new Error('Anahtar geçersiz veya bu depoya erişimi yok.');
+      if(r.j.permissions&&!r.j.permissions.push)throw new Error('Anahtarın "Contents: Read and write" izni yok.');
+      localStorage.setItem(LS_TOKEN,t);$('tokenInput').value='';$('tokenErr').textContent='';showApp();
+    }).catch(function(err){$('tokenErr').textContent=err.message;});
+});
+$('btnLogout').addEventListener('click',function(){
+  if(hasChanges()&&!confirm('Yayınlanmamış değişiklikler var. Yine de çıkılsın mı?'))return;
+  sessionStorage.removeItem(SS_AUTH);location.reload();
+});
+$('forgetToken').addEventListener('click',function(e){e.preventDefault();if(confirm('Yayın anahtarı bu cihazdan silinsin mi?')){localStorage.removeItem(LS_TOKEN);location.reload();}});
+
+/* section scroll */
+window.scrollSec=function(id){
+  var f=$('frame');if(!f.contentDocument)return;
+  var el=f.contentDocument.getElementById(id)||f.contentDocument.querySelector('#'+id)||f.contentDocument.body;
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+};
+
+/* iframe */
+var frame=$('frame'),fdoc=null;
+function loadFrame(){frame.src='../index.html?edit='+Date.now();}
+frame.addEventListener('load',function(){try{fdoc=frame.contentDocument;setupEditing();}catch(e){toast('Site yüklenemedi');}});
+
+function telHref(v){var d=v.replace(/\D/g,'');if(d[0]==='0')d='90'+d.slice(1);else if(d.length===10)d='90'+d;return 'tel:+'+d;}
+function applyHref(el){var t=el.getAttribute('data-href-type');if(!t)return;var v=el.textContent.trim();el.setAttribute('href',t==='tel'?telHref(v):'mailto:'+v);}
+
+function setupEditing(){
+  var st=fdoc.createElement('style');
+  st.textContent=
+    '[data-edit]{outline:1px dashed transparent;outline-offset:3px;cursor:text;transition:outline-color .15s}'+
+    '[data-edit]:hover{outline-color:rgba(232,199,126,.85)}[data-edit]:focus{outline:2px solid #E8C77E;background:rgba(232,199,126,.08)}'+
+    '[data-edit-img]:not(link){outline:2px solid transparent;outline-offset:-2px}[data-edit-img]:not(link):hover{outline-color:#E8C77E;cursor:pointer}'+
+    '.svc-icon{cursor:pointer !important;outline:2px dashed transparent;outline-offset:4px;border-radius:4px;pointer-events:auto !important}'+
+    '.svc-icon:hover{outline-color:#E8C77E}'+
+    '.marquee{animation:none!important;flex-wrap:wrap;width:auto!important;justify-content:center}.reveal{opacity:1!important;transform:none!important}'+
+    '.hero-scrim,.hero-inner{pointer-events:none}.hero-inner [data-edit]{pointer-events:auto}'+
+    '.gal-cap{opacity:1!important;transform:none!important}';
+  fdoc.head.appendChild(st);
+  applyStylesToFrame();
+  fdoc.querySelectorAll('[data-edit]').forEach(function(el){el.setAttribute('contenteditable','true');el.setAttribute('spellcheck','false');});
+  /* icon click */
+  fdoc.querySelectorAll('.svc-icon').forEach(function(svg,i){
+    svg.setAttribute('data-icon-key','svc'+(i+1));
+    svg.addEventListener('click',function(e){e.stopPropagation();openIconPicker(this.getAttribute('data-icon-key'));});
+  });
+  fdoc.addEventListener('click',function(e){
+    var img=e.target.closest&&e.target.closest('[data-edit-img]');
+    if(img&&img.tagName!=='LINK'){e.preventDefault();openImg(img.getAttribute('data-edit-img'));return;}
+    if(e.target.closest&&e.target.closest('a,button'))e.preventDefault();
+  },true);
+  fdoc.addEventListener('submit',function(e){e.preventDefault();},true);
+  fdoc.addEventListener('keydown',function(e){
+    if(e.target.closest&&e.target.closest('[data-edit]')){if(e.key==='Enter'){e.preventDefault();e.target.blur();}e.stopPropagation();}
+  },true);
+  fdoc.addEventListener('paste',function(e){
+    if(e.target.closest&&e.target.closest('[data-edit]')){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s*\n\s*/g,' ');fdoc.execCommand('insertText',false,t);}
+  },true);
+  fdoc.addEventListener('focus',function(e){
+    var el=e.target.closest&&e.target.closest('[data-edit]');
+    if(el){curStyleKey=el.getAttribute('data-edit');showFmtBar(el);syncStylePanel(curStyleKey);syncStyleUI();}
+  },true);
+  fdoc.addEventListener('blur',function(e){
+    var el=e.target.closest&&e.target.closest('[data-edit]');
+    if(el){setTimeout(function(){if(!$('fmtBar').matches(':hover')&&!$('fmtBar').contains(document.activeElement))hideFmtBar();},200);}
+  },true);
+  fdoc.addEventListener('input',function(e){
+    var el=e.target.closest&&e.target.closest('[data-edit]');if(!el)return;
+    var k=el.getAttribute('data-edit'),v=el.textContent;
+    changes.texts[k]=v;
+    fdoc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(o){if(o!==el)o.textContent=v;});
+    fdoc.querySelectorAll('[data-edit="'+k+'"][data-href-type]').forEach(applyHref);
+    touched();
+  },true);
+  /* populate style key select */
+  var sel=$('styleKeySelect');sel.innerHTML='<option value="">— seçin —</option>';
+  var seen={};
+  fdoc.querySelectorAll('[data-edit]').forEach(function(el){
+    var k=el.getAttribute('data-edit');if(seen[k])return;seen[k]=1;
+    var o=document.createElement('option');o.value=k;o.textContent=k+' — '+el.textContent.substring(0,28);
+    sel.appendChild(o);
+  });
+  $('setTitle').value=fdoc.title;
+  var md=fdoc.querySelector('meta[name=description]');$('setDesc').value=md?md.content:'';
+  $('setTypes').value=Array.from(fdoc.querySelectorAll('#f-type option')).map(function(o){return o.textContent;}).join('\n');
+  var ta=fdoc.getElementById('f-msg');$('setPlaceholder').value=ta?ta.getAttribute('placeholder')||'':'';
+  buildImgList();buildGalManager();
+}
+
+/* styles */
+function applyStylesToFrame(){
+  if(!fdoc)return;
+  var existing=fdoc.getElementById('admin-styles');if(existing)existing.remove();
+  var rules=buildStyleRules(changes.styles);
+  if(!rules)return;
+  var st=fdoc.createElement('style');st.id='admin-styles';st.textContent=rules;fdoc.head.appendChild(st);
+}
+function buildStyleRules(stylesObj){
+  return Object.keys(stylesObj).map(function(k){
+    var s=stylesObj[k];var props=[];
+    if(s.color)props.push('color:'+s.color);
+    if(s.fontSize)props.push('font-size:'+s.fontSize);
+    if(s.fontFamily)props.push('font-family:'+s.fontFamily);
+    if(s.fontWeight)props.push('font-weight:'+s.fontWeight);
+    if(s.fontStyle)props.push('font-style:'+s.fontStyle);
+    if(s.letterSpacing)props.push('letter-spacing:'+s.letterSpacing);
+    if(s.lineHeight)props.push('line-height:'+s.lineHeight);
+    return props.length?'[data-edit="'+k+'"]{'+props.join(';')+'}':'';
+  }).filter(Boolean).join('\n');
+}
+window.applyStyleProp=function(prop,val){
+  if(!curStyleKey)return;
+  if(!changes.styles[curStyleKey])changes.styles[curStyleKey]={};
+  if(!val||val==='0rem'||val==='0em'){delete changes.styles[curStyleKey][prop];}
+  else{changes.styles[curStyleKey][prop]=val;}
+  if(!Object.keys(changes.styles[curStyleKey]).length)delete changes.styles[curStyleKey];
+  applyStylesToFrame();touched();
+};
+window.clearStyle=function(){if(!curStyleKey)return;delete changes.styles[curStyleKey];applyStylesToFrame();syncStyleUI();touched();};
+window.toggleStyleProp=function(prop,onVal,offVal){
+  if(!curStyleKey)return;
+  var cur=(changes.styles[curStyleKey]||{})[prop];
+  window.applyStyleProp(prop,cur===onVal?offVal:onVal);syncStyleUI();
+};
+window.loadStyleKey=function(k){curStyleKey=k||null;syncStyleUI();};
+function syncStylePanel(k){$('styleKeySelect').value=k||'';}
+function syncStyleUI(){
+  var s=curStyleKey?(changes.styles[curStyleKey]||{}):{};
+  $('stylePropColor').value=s.color||'#F4EEE3';
+  $('stylePropSize').value=s.fontSize?parseFloat(s.fontSize):'';
+  $('stylePropFont').value=s.fontFamily||'';
+  $('stylePropWeight').value=s.fontWeight||'';
+  $('stylePropLS').value=s.letterSpacing?parseFloat(s.letterSpacing):'';
+  $('stylePropLH').value=s.lineHeight||'';
+  $('fmtColor').value=s.color||'#F4EEE3';
+  $('fmtSize').value=s.fontSize?parseFloat(s.fontSize):'';
+  $('fmtFont').value=s.fontFamily||'';
+  $('fmtBold').classList.toggle('on',s.fontWeight==='700');
+  $('fmtItalic').classList.toggle('on',s.fontStyle==='italic');
+}
+
+/* format bar */
+function showFmtBar(el){
+  var bar=$('fmtBar');bar.style.display='flex';
+  var fr=$('frame'),fr_rect=fr.getBoundingClientRect(),el_rect=el.getBoundingClientRect();
+  var top=fr_rect.top+el_rect.top-46,left=fr_rect.left+el_rect.left;
+  if(top<4)top=fr_rect.top+el_rect.top+el_rect.height+6;
+  bar.style.top=Math.max(4,top)+'px';bar.style.left=Math.max(4,Math.min(left,window.innerWidth-300))+'px';
+}
+function hideFmtBar(){$('fmtBar').style.display='none';}
+$('fmtColor').addEventListener('input',function(){window.applyStyleProp('color',this.value);});
+$('fmtSize').addEventListener('change',function(){if(this.value)window.applyStyleProp('fontSize',this.value+'rem');});
+$('fmtFont').addEventListener('change',function(){window.applyStyleProp('fontFamily',this.value);});
+window.fmtToggle=function(prop,on,off){
+  if(!curStyleKey)return;
+  var cur=(changes.styles[curStyleKey]||{})[prop];
+  window.applyStyleProp(prop,cur===on?off:on);syncStyleUI();
+};
+
+/* settings */
+['setTitle','setDesc','setTypes','setPlaceholder'].forEach(function(id){
+  $(id).addEventListener('input',function(){
+    changes.meta={title:$('setTitle').value,description:$('setDesc').value,types:$('setTypes').value,placeholder:$('setPlaceholder').value};
+    if(fdoc)fdoc.title=changes.meta.title;touched();
+  });
+});
+$('btnSettings').addEventListener('click',function(){$('drawer').classList.toggle('on');});
+$('btnView').addEventListener('click',function(){var m=frame.classList.toggle('mobile');$('btnView').textContent=m?'Bilgisayar':'Telefon';});
+
+/* gallery */
+function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function buildGalManager(){
+  if(!fdoc)return;galState=[];
+  fdoc.querySelectorAll('.gal-item').forEach(function(item,i){
+    var img=item.querySelector('img');
+    var t=item.querySelector('[data-edit$=".title"]');
+    var v=item.querySelector('[data-edit$=".venue"]');
+    galState.push({key:'gal'+(i+1),title:t?t.textContent:'',venue:v?v.textContent:'',wide:item.classList.contains('wide'),tall:item.classList.contains('tall'),imgSrc:img?img.src:''});
+  });
+  renderGalManager();
+}
+function renderGalManager(){
+  var box=$('galManager');box.innerHTML='';
+  galState.forEach(function(g,i){
+    var d=document.createElement('div');d.className='gal-row';
+    d.innerHTML='<img src="'+escH(g.imgSrc)+'" alt="">'+
+      '<div class="gal-info">'+
+        '<input data-gi="title" data-idx="'+i+'" value="'+escH(g.title)+'" placeholder="Başlık" style="margin-bottom:4px">'+
+        '<input data-gi="venue" data-idx="'+i+'" value="'+escH(g.venue)+'" placeholder="Mekan">'+
+        '<div class="gal-btns">'+
+          '<button class="tag-btn'+(g.wide?' on':'')+'" data-gi="wide" data-idx="'+i+'">Geniş</button>'+
+          '<button class="tag-btn'+(g.tall?' on':'')+'" data-gi="tall" data-idx="'+i+'">Yüksek</button>'+
+          '<button class="tag-btn" data-gi="del" data-idx="'+i+'" style="color:var(--bad)">Sil</button>'+
+        '</div>'+
+      '</div>';
+    box.appendChild(d);
+  });
+  box.querySelectorAll('input[data-gi]').forEach(function(inp){
+    inp.addEventListener('input',function(){var idx=parseInt(this.dataset.idx);galState[idx][this.dataset.gi]=this.value;commitGal();});
+  });
+  box.querySelectorAll('button[data-gi]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var idx=parseInt(this.dataset.idx),field=this.dataset.gi;
+      if(field==='del'){galState.splice(idx,1);renderGalManager();commitGal();}
+      else{galState[idx][field]=!galState[idx][field];renderGalManager();commitGal();}
+    });
+  });
+}
+function commitGal(){
+  changes.gallery=JSON.parse(JSON.stringify(galState));
+  if(!fdoc)return;
+  var grid=fdoc.querySelector('.gal-grid');if(!grid)return;
+  grid.innerHTML=galState.map(function(g){
+    var cls='gal-item'+(g.wide?' wide':'')+(g.tall?' tall':'');
+    return '<div class="'+cls+'"><img src="'+escH(g.imgSrc)+'" alt="" data-edit-img="'+g.key+'">'+
+      '<div class="gal-cap"><div class="t" data-edit="'+g.key+'.title">'+escH(g.title)+'</div>'+
+      '<div class="v" data-edit="'+g.key+'.venue">'+escH(g.venue)+'</div></div></div>';
+  }).join('');
+  touched();
+}
+window.addGalItem=function(){
+  galState.push({key:'gal'+(galState.length+1),title:'Yeni Proje',venue:'Mekan',wide:false,tall:false,imgSrc:'../uploads/gal1.jpg'});
+  renderGalManager();commitGal();
+};
+
+/* images */
+function buildImgList(){
+  var box=$('imglist');box.innerHTML='';var seen={};
+  if(!fdoc)return;
+  fdoc.querySelectorAll('[data-edit-img]').forEach(function(el){
+    var k=el.getAttribute('data-edit-img');if(seen[k])return;seen[k]=1;
+    var src=changes.imgs[k]?changes.imgs[k].url:(el.tagName==='LINK'?el.href:el.src);
+    var d=document.createElement('div');d.className='imgitem';
+    d.innerHTML='<img alt=""><span></span>';d.firstChild.src=src;
+    d.lastChild.textContent=k==='hero'?'Hero':k==='about'?'Hakkımızda':k==='logo'?'Logo':'Galeri '+(k.replace('gal',''));
+    d.addEventListener('click',function(){openImg(k);});box.appendChild(d);
+  });
+}
+var curImgKey=null,curFile=null;
+function openImg(k){
+  curImgKey=k;curFile=null;$('imgFile').value='';$('imgErr').textContent='';
+  var el=fdoc.querySelector('[data-edit-img="'+k+'"]');
+  var real=fdoc.querySelector('img[data-edit-img="'+k+'"]');
+  $('imgTitle').textContent=k;
+  $('imgPrev').src=changes.imgs[k]?changes.imgs[k].url:(real?real.src:(el?el.href:''));
+  $('imgAlt').value=changes.alts[k]!==undefined?changes.alts[k]:(real?real.getAttribute('alt')||'':'');
+  $('imgAlt').disabled=!real;
+  $('imgModal').classList.add('on');
+}
+$('imgFile').addEventListener('change',function(e){curFile=e.target.files[0]||null;if(curFile)$('imgPrev').src=URL.createObjectURL(curFile);});
+$('imgCancel').addEventListener('click',function(){$('imgModal').classList.remove('on');});
+$('imgApply').addEventListener('click',function(){
+  var k=curImgKey;
+  var done=function(){
+    var real=fdoc.querySelectorAll('img[data-edit-img="'+k+'"]');
+    if(!$('imgAlt').disabled){var a=$('imgAlt').value;changes.alts[k]=a;real.forEach(function(i){i.setAttribute('alt',a);});}
+    $('imgModal').classList.remove('on');buildImgList();buildGalManager();touched();
+  };
+  if(!curFile){done();return;}
+  $('imgErr').textContent='Görsel hazırlanıyor…';
+  prepImage(curFile,k).then(function(r){
+    changes.imgs[k]=r;
+    fdoc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){if(el.tagName==='LINK')el.href=r.url;else el.src=r.url;});
+    $('imgErr').textContent='';done();
+  }).catch(function(){$('imgErr').textContent='Görsel okunamadı.';});
+});
+function prepImage(file,key){
+  var max=key==='logo'?600:2400,png=key==='logo'&&file.type==='image/png';
+  return createImageBitmap(file).then(function(bmp){
+    var s=Math.min(1,max/bmp.width),w=Math.round(bmp.width*s),h=Math.round(bmp.height*s);
+    var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');
+    if(!png){x.fillStyle='#fff';x.fillRect(0,0,w,h);}
+    x.drawImage(bmp,0,0,w,h);
+    return new Promise(function(res){c.toBlob(function(b){res({blob:b,ext:png?'png':'jpg',url:URL.createObjectURL(b)});},png?'image/png':'image/jpeg',.86);});
+  });
+}
+
+/* icon picker */
+var ICONS=[
+  {k:'svc1',n:'Ampul',s:'<circle cx="12" cy="10" r="5.2"/><path d="M9.6 19h4.8M10.3 21.4h3.4" stroke-linecap="round"/><path d="M12 3.4V1.6M4.6 6.2 3.3 4.9M19.4 6.2l1.3-1.3" stroke-linecap="round"/>'},
+  {k:'star',n:'Yıldız',s:'<polygon points="12,2 15.1,8.3 22,9.3 17,14.1 18.2,21 12,17.8 5.8,21 7,14.1 2,9.3 8.9,8.3"/>'},
+  {k:'heart',n:'Kalp',s:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1 7.7 7.7 7.7-7.7 1.1-1a5.5 5.5 0 0 0 0-7.8z"/>'},
+  {k:'camera',n:'Fotoğraf',s:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>'},
+  {k:'music',n:'Müzik',s:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'},
+  {k:'gift',n:'Hediye',s:'<polyline points="20,12 20,22 4,22 4,12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>'},
+  {k:'globe',n:'Dünya',s:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'},
+  {k:'award',n:'Ödül',s:'<circle cx="12" cy="8" r="6"/><path d="M15.5 14.5 17 22l-5-3-5 3 1.5-7.5"/>'},
+  {k:'users',n:'Misafir',s:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'},
+  {k:'map',n:'Harita',s:'<polygon points="3,6 9,3 15,6 21,3 21,18 15,21 9,18 3,21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/>'},
+  {k:'pen',n:'Tasarım',s:'<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>'},
+  {k:'zap',n:'Enerji',s:'<polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>'},
+  {k:'home',n:'Mekan',s:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>'},
+  {k:'briefcase',n:'Kurumsal',s:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><line x1="2" y1="12" x2="22" y2="12"/>'},
+  {k:'calendar',n:'Takvim',s:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'},
+  {k:'sunset',n:'Sahne',s:'<path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="4.2" y1="4.2" x2="5.7" y2="5.7"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="18.3" y1="5.7" x2="19.8" y2="4.2"/>'},
+  {k:'clock',n:'Zaman',s:'<circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>'},
+  {k:'check',n:'Onay',s:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/>'},
+  {k:'layers',n:'Katmanlar',s:'<polygon points="12,2 2,7 12,12 22,7"/><polyline points="2,17 12,22 22,17"/><polyline points="2,12 12,17 22,12"/>'},
+  {k:'send',n:'İletişim',s:'<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/>'}
+];
+var curIconKey=null,selIconIdx=null;
+function openIconPicker(key){
+  curIconKey=key;selIconIdx=null;
+  var grid=$('iconGrid');grid.innerHTML='';
+  ICONS.forEach(function(ic,i){
+    var d=document.createElement('div');d.className='icon-opt';
+    d.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">'+ic.s+'</svg><span>'+ic.n+'</span>';
+    d.addEventListener('click',function(){grid.querySelectorAll('.icon-opt').forEach(function(x){x.classList.remove('sel');});d.classList.add('sel');selIconIdx=i;});
+    grid.appendChild(d);
+  });
+  $('iconModal').classList.add('on');
+}
+$('iconCancel').addEventListener('click',function(){$('iconModal').classList.remove('on');});
+$('iconApply').addEventListener('click',function(){
+  if(selIconIdx===null||!curIconKey)return;
+  var ic=ICONS[selIconIdx];
+  var newSvgHtml='<svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" data-icon-key="'+curIconKey+'">'+ic.s+'</svg>';
+  changes.icons[curIconKey]=newSvgHtml;
+  var el=fdoc.querySelector('[data-icon-key="'+curIconKey+'"]');
+  if(el){var tmp=fdoc.createElement('div');tmp.innerHTML=newSvgHtml;var newEl=tmp.firstChild;newEl.addEventListener('click',function(e){e.stopPropagation();openIconPicker(curIconKey);});el.parentNode.replaceChild(newEl,el);}
+  $('iconModal').classList.remove('on');touched();
+});
+
+/* publish */
+function touched(){rev++;$('btnPublish').disabled=false;setStatus('Değişiklik var…','dirty');clearTimeout(timer);timer=setTimeout(publish,3000);}
+$('btnPublish').addEventListener('click',function(){clearTimeout(timer);publish();});
+window.addEventListener('beforeunload',function(e){if(hasChanges()||publishing){e.preventDefault();e.returnValue='';}});
+
+function gh(path,opts){
+  opts=opts||{};
+  return fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo+path,{
+    method:opts.method||'GET',body:opts.body?JSON.stringify(opts.body):undefined,
+    headers:Object.assign({Authorization:'Bearer '+token(),Accept:opts.accept||'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},opts.body?{'Content-Type':'application/json'}:{})
+  }).then(function(r){
+    if(opts.raw)return r.ok?r.text():Promise.reject({status:r.status});
+    return r.json().then(function(j){if(!r.ok)return Promise.reject({status:r.status,j:j});return j;});
+  });
+}
+function blobToB64(b){return new Promise(function(res){var f=new FileReader();f.onload=function(){res(String(f.result).split(',')[1]);};f.readAsDataURL(b);});}
+
+function applyChanges(htmlText,ch,imgPaths){
+  var doc=new DOMParser().parseFromString(htmlText,'text/html');
+  Object.keys(ch.texts).forEach(function(k){
+    doc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(el){
+      el.textContent=ch.texts[k];
+      var t=el.getAttribute('data-href-type');
+      if(t)el.setAttribute('href',t==='tel'?telHref(ch.texts[k]):'mailto:'+ch.texts[k].trim());
+    });
+  });
+  Object.keys(imgPaths||{}).forEach(function(k){doc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){el.setAttribute(el.getAttribute('data-attr')||'src',imgPaths[k]);});});
+  Object.keys(ch.alts).forEach(function(k){doc.querySelectorAll('img[data-edit-img="'+k+'"]').forEach(function(el){el.setAttribute('alt',ch.alts[k]);});});
+  var m=ch.meta;
+  if(m&&m.title!==undefined){
+    doc.title=m.title;
+    var md=doc.querySelector('meta[name=description]');if(md)md.setAttribute('content',m.description);
+    var sel=doc.getElementById('f-type');
+    if(sel){sel.innerHTML='';m.types.split('\n').map(function(s){return s.trim();}).filter(Boolean).forEach(function(s){var o=doc.createElement('option');o.textContent=s;sel.appendChild(o);});}
+    var ta=doc.getElementById('f-msg');if(ta)ta.setAttribute('placeholder',m.placeholder);
+  }
+  /* styles */
+  var rules=buildStyleRules(ch.styles||{});
+  var ex=doc.getElementById('admin-styles');if(ex)ex.remove();
+  if(rules){var st=doc.createElement('style');st.id='admin-styles';st.textContent=rules;doc.head.appendChild(st);}
+  /* icons */
+  Object.keys(ch.icons||{}).forEach(function(k){
+    var el=doc.querySelector('[data-icon-key="'+k+'"]');
+    if(!el){var num=parseInt(k.replace('svc',''));el=doc.querySelectorAll('.svc-icon')[num-1];}
+    if(el){var tmp=doc.createElement('div');tmp.innerHTML=ch.icons[k];el.parentNode.replaceChild(tmp.firstChild,el);}
+  });
+  /* gallery */
+  if(ch.gallery){
+    var grid=doc.querySelector('.gal-grid');
+    if(grid){
+      grid.innerHTML=ch.gallery.map(function(g){
+        var cls='gal-item'+(g.wide?' wide':'')+(g.tall?' tall':'');
+        var src=imgPaths&&imgPaths[g.key]?imgPaths[g.key]:g.imgSrc;
+        return '<div class="'+cls+'"><img src="'+escH(src)+'" alt="" data-edit-img="'+g.key+'">'+
+          '<div class="gal-cap"><div class="t" data-edit="'+g.key+'.title">'+escH(g.title)+'</div>'+
+          '<div class="v" data-edit="'+g.key+'.venue">'+escH(g.venue)+'</div></div></div>';
+      }).join('');
     }
-    for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255; r+=((b<16)?0:'')+b.toString(16);}
-    return r;
   }
-  function sha256(s){ if(!(window.crypto&&crypto.subtle)) return Promise.resolve(sha256js(s)); return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){ return x.toString(16).padStart(2,'0'); }).join(''); }); }
-  function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove('on'); }, 2600); }
-  function token(){ return localStorage.getItem(LS_TOKEN); }
-  function hasChanges(){ return Object.keys(changes.texts).length || Object.keys(changes.imgs).length || Object.keys(changes.alts).length || Object.keys(changes.meta).length; }
-  function setStatus(txt, cls){ var s=$('status'); s.textContent=txt; s.className='chip '+(cls||''); }
+  return '<!doctype html>\n'+doc.documentElement.outerHTML+'\n';
+}
 
-  /* ---------- auth ---------- */
-  function showApp(){
-    if(location.protocol==='http:' && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) $('httpWarn').style.display='block';
-    $('gate').classList.remove('on');
-    if(!token()){ $('tokenScreen').classList.add('on'); return; }
-    $('tokenScreen').classList.remove('on'); $('app').classList.add('on'); loadFrame();
-  }
-  $('pinForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    sha256('suzy-admin:' + $('pin').value).then(function(h){
-      if(h === CFG.pinHash){ sessionStorage.setItem(SS_AUTH,'1'); $('pinErr').textContent=''; showApp(); }
-      else { $('pinErr').textContent='Şifre hatalı.'; $('pin').value=''; }
-    });
+function commitFiles(branch,files,message){
+  var base;
+  return gh('/git/ref/heads/'+branch).then(function(ref){base=ref.object.sha;return gh('/git/commits/'+base);})
+  .then(function(commit){
+    return Promise.all(files.map(function(f){return gh('/git/blobs',{method:'POST',body:{content:f.content,encoding:f.encoding}}).then(function(b){return{path:f.path,mode:'100644',type:'blob',sha:b.sha};});}))
+      .then(function(tree){return gh('/git/trees',{method:'POST',body:{base_tree:commit.tree.sha,tree:tree}});});
+  }).then(function(tree){return gh('/git/commits',{method:'POST',body:{message:message,tree:tree.sha,parents:[base]}});})
+  .then(function(c){return gh('/git/refs/heads/'+branch,{method:'PATCH',body:{sha:c.sha}});});
+}
+
+function publish(attempt){
+  if(publishing){clearTimeout(timer);timer=setTimeout(publish,1500);return;}
+  if(!hasChanges()){setStatus('Değişiklik yok');$('btnPublish').disabled=true;return;}
+  publishing=true;setStatus('Yayınlanıyor…','dirty');
+  var snap={rev:rev,texts:Object.assign({},changes.texts),alts:Object.assign({},changes.alts),meta:Object.assign({},changes.meta),imgs:Object.assign({},changes.imgs),styles:JSON.parse(JSON.stringify(changes.styles)),icons:Object.assign({},changes.icons),gallery:changes.gallery?JSON.parse(JSON.stringify(changes.gallery)):null};
+  var stamp=Date.now(),imgPaths={};
+  Object.keys(snap.imgs).forEach(function(k){imgPaths[k]='uploads/'+k+'-'+stamp+'.'+snap.imgs[k].ext;});
+  gh('/contents/index.html?ref='+CFG.branch,{accept:'application/vnd.github.raw+json',raw:true}).then(function(src){
+    var html=applyChanges(src,snap,imgPaths);
+    return Promise.all(Object.keys(snap.imgs).map(function(k){return blobToB64(snap.imgs[k].blob).then(function(b64){return{path:imgPaths[k],content:b64,encoding:'base64'};});}))
+      .then(function(imgs){return commitFiles(CFG.branch,imgs.concat([{path:'index.html',content:html,encoding:'utf-8'}]),'Yönetim paneli: içerik güncellendi');});
+  }).then(function(){
+    Object.keys(snap.texts).forEach(function(k){if(changes.texts[k]===snap.texts[k])delete changes.texts[k];});
+    Object.keys(snap.alts).forEach(function(k){if(changes.alts[k]===snap.alts[k])delete changes.alts[k];});
+    Object.keys(snap.imgs).forEach(function(k){if(changes.imgs[k]===snap.imgs[k])delete changes.imgs[k];});
+    if(JSON.stringify(changes.meta)===JSON.stringify(snap.meta))changes.meta={};
+    if(JSON.stringify(changes.styles)===JSON.stringify(snap.styles))changes.styles={};
+    if(JSON.stringify(changes.icons)===JSON.stringify(snap.icons))changes.icons={};
+    if(JSON.stringify(changes.gallery)===JSON.stringify(snap.gallery))changes.gallery=null;
+    publishing=false;
+    if(hasChanges()){setStatus('Değişiklik var…','dirty');clearTimeout(timer);timer=setTimeout(publish,1200);}
+    else{setStatus('Yayınlandı ✓','ok');$('btnPublish').disabled=true;}
+  }).catch(function(err){
+    publishing=false;
+    if(!attempt&&err&&err.status===422){return publish(1);}
+    var msg=err&&err.status===401?'Yayın anahtarı geçersiz.':'Yayınlanamadı'+(err&&err.status?' ('+err.status+')':'');
+    setStatus(msg,'bad');toast(msg);$('btnPublish').disabled=false;
   });
-  $('tokenForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    var t = $('tokenInput').value.trim(); if(!t) return;
-    $('tokenErr').textContent = 'Kontrol ediliyor…';
-    fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo, { headers:{ Authorization:'Bearer '+t, Accept:'application/vnd.github+json' } })
-      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
-      .then(function(r){
-        if(!r.ok) throw new Error('Anahtar geçersiz veya bu depoya erişimi yok.');
-        if(r.j.permissions && !r.j.permissions.push) throw new Error('Anahtarın "Contents: Read and write" izni yok.');
-        localStorage.setItem(LS_TOKEN, t); $('tokenInput').value=''; $('tokenErr').textContent=''; showApp();
-      }).catch(function(err){ $('tokenErr').textContent = err.message; });
-  });
-  $('btnLogout').addEventListener('click', function(){
-    if(hasChanges() && !confirm('Yayınlanmamış değişiklikler var. Yine de çıkılsın mı?')) return;
-    sessionStorage.removeItem(SS_AUTH); location.reload();
-  });
-  $('forgetToken').addEventListener('click', function(e){ e.preventDefault(); if(confirm('Yayın anahtarı bu cihazdan silinsin mi?')){ localStorage.removeItem(LS_TOKEN); location.reload(); } });
+}
 
-  /* ---------- editing surface ---------- */
-  var frame = $('frame'), fdoc = null;
-  function loadFrame(){ frame.src = '../index.html?edit=' + Date.now(); }
-  frame.addEventListener('load', function(){ try { fdoc = frame.contentDocument; setupEditing(); } catch(e){ toast('Site yüklenemedi'); } });
-
-  function telHref(v){ var d=v.replace(/\D/g,''); if(d[0]==='0') d='90'+d.slice(1); else if(d.length===10) d='90'+d; return 'tel:+'+d; }
-  function applyHref(el){ var t=el.getAttribute('data-href-type'); if(!t) return; var v=el.textContent.trim(); el.setAttribute('href', t==='tel' ? telHref(v) : 'mailto:'+v); }
-
-  function setupEditing(){
-    var st = fdoc.createElement('style');
-    st.textContent =
-      '[data-edit]{outline:1px dashed transparent;outline-offset:3px;cursor:text;transition:outline-color .15s}' +
-      '[data-edit]:hover{outline-color:rgba(232,199,126,.85)}[data-edit]:focus{outline:2px solid #E8C77E;background:rgba(232,199,126,.08)}' +
-      '[data-edit-img]:not(link){outline:2px solid transparent;outline-offset:-2px}[data-edit-img]:not(link):hover{outline-color:#E8C77E;cursor:pointer}' +
-      '.marquee{animation:none!important;flex-wrap:wrap;width:auto!important;justify-content:center}.reveal{opacity:1!important;transform:none!important}' +
-      '.hero-scrim,.hero-inner{pointer-events:none}.hero-inner [data-edit]{pointer-events:auto}' +
-      '.gal-cap{opacity:1!important;transform:none!important}';
-    fdoc.head.appendChild(st);
-
-    fdoc.querySelectorAll('[data-edit]').forEach(function(el){ el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','false'); });
-    fdoc.addEventListener('click', function(e){
-      var img = e.target.closest && e.target.closest('[data-edit-img]');
-      if(img && img.tagName!=='LINK'){ e.preventDefault(); openImg(img.getAttribute('data-edit-img')); return; }
-      if(e.target.closest && e.target.closest('a,button')) e.preventDefault();
-    }, true);
-    fdoc.addEventListener('submit', function(e){ e.preventDefault(); }, true);
-    fdoc.addEventListener('keydown', function(e){
-      if(e.target.closest && e.target.closest('[data-edit]')){ if(e.key==='Enter'){ e.preventDefault(); e.target.blur(); } e.stopPropagation(); }
-    }, true);
-    fdoc.addEventListener('paste', function(e){
-      if(e.target.closest && e.target.closest('[data-edit]')){ e.preventDefault(); var t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s*\n\s*/g,' '); fdoc.execCommand('insertText', false, t); }
-    }, true);
-    fdoc.addEventListener('input', function(e){
-      var el = e.target.closest && e.target.closest('[data-edit]'); if(!el) return;
-      var k = el.getAttribute('data-edit'), v = el.textContent;
-      changes.texts[k] = v;
-      fdoc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(o){ if(o!==el) o.textContent=v; });
-      fdoc.querySelectorAll('[data-edit="'+k+'"][data-href-type]').forEach(applyHref);
-      touched();
-    }, true);
-
-    // settings drawer fields
-    $('setTitle').value = fdoc.title;
-    var md = fdoc.querySelector('meta[name=description]'); $('setDesc').value = md ? md.content : '';
-    $('setTypes').value = Array.from(fdoc.querySelectorAll('#f-type option')).map(function(o){ return o.textContent; }).join('\n');
-    var ta = fdoc.getElementById('f-msg'); $('setPlaceholder').value = ta ? ta.getAttribute('placeholder')||'' : '';
-    buildImgList();
-  }
-
-  function buildImgList(){
-    var box = $('imglist'); box.innerHTML=''; var seen = {};
-    fdoc.querySelectorAll('[data-edit-img]').forEach(function(el){
-      var k = el.getAttribute('data-edit-img'); if(seen[k]) return; seen[k]=1;
-      var src = changes.imgs[k] ? changes.imgs[k].url : (el.tagName==='LINK' ? el.href : el.src);
-      var d = document.createElement('div'); d.className='imgitem';
-      d.innerHTML = '<img alt=""><span></span>'; d.firstChild.src = src; d.lastChild.textContent = labelFor(k);
-      d.addEventListener('click', function(){ openImg(k); }); box.appendChild(d);
-    });
-  }
-  function labelFor(k){ if(k==='hero') return 'Ana görsel (hero)'; if(k==='about') return 'Hakkımızda'; if(k==='logo') return 'Logo / ikon'; var m=k.match(/^gal(\d+)$/); return m ? 'Galeri '+m[1] : k; }
-
-  ['setTitle','setDesc','setTypes','setPlaceholder'].forEach(function(id){
-    $(id).addEventListener('input', function(){
-      changes.meta = { title:$('setTitle').value, description:$('setDesc').value, types:$('setTypes').value, placeholder:$('setPlaceholder').value };
-      if(fdoc){ fdoc.title = changes.meta.title; }
-      touched();
-    });
-  });
-  $('btnSettings').addEventListener('click', function(){ $('drawer').classList.toggle('on'); });
-  $('btnView').addEventListener('click', function(){ var m=frame.classList.toggle('mobile'); $('btnView').textContent = m ? 'Bilgisayar' : 'Telefon'; });
-
-  /* ---------- images ---------- */
-  var curKey = null, curFile = null;
-  function openImg(k){
-    curKey = k; curFile = null; $('imgFile').value=''; $('imgErr').textContent='';
-    var el = fdoc.querySelector('[data-edit-img="'+k+'"]');
-    var real = fdoc.querySelector('img[data-edit-img="'+k+'"]');
-    $('imgTitle').textContent = labelFor(k);
-    $('imgPrev').src = changes.imgs[k] ? changes.imgs[k].url : (real ? real.src : el.href);
-    $('imgAlt').value = changes.alts[k] !== undefined ? changes.alts[k] : (real ? real.getAttribute('alt')||'' : '');
-    $('imgAlt').disabled = !real;
-    $('imgModal').classList.add('on');
-  }
-  $('imgFile').addEventListener('change', function(e){ curFile = e.target.files[0] || null; if(curFile) $('imgPrev').src = URL.createObjectURL(curFile); });
-  $('imgCancel').addEventListener('click', function(){ $('imgModal').classList.remove('on'); });
-  $('imgApply').addEventListener('click', function(){
-    var k = curKey;
-    var done = function(){
-      var real = fdoc.querySelectorAll('img[data-edit-img="'+k+'"]');
-      if(!$('imgAlt').disabled){ var a=$('imgAlt').value; changes.alts[k]=a; real.forEach(function(i){ i.setAttribute('alt', a); }); }
-      $('imgModal').classList.remove('on'); buildImgList(); touched();
-    };
-    if(!curFile){ done(); return; }
-    $('imgErr').textContent = 'Görsel hazırlanıyor…';
-    prepImage(curFile, k).then(function(r){
-      changes.imgs[k] = r;
-      fdoc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){
-        if(el.tagName==='LINK') el.href = r.url; else el.src = r.url;
-      });
-      $('imgErr').textContent=''; done();
-    }).catch(function(){ $('imgErr').textContent='Görsel okunamadı.'; });
-  });
-  function prepImage(file, key){
-    var max = key==='logo' ? 600 : 2400, png = key==='logo' && file.type==='image/png';
-    return createImageBitmap(file).then(function(bmp){
-      var s = Math.min(1, max/bmp.width), w=Math.round(bmp.width*s), h=Math.round(bmp.height*s);
-      var c=document.createElement('canvas'); c.width=w; c.height=h; var x=c.getContext('2d');
-      if(!png){ x.fillStyle='#fff'; x.fillRect(0,0,w,h); }
-      x.drawImage(bmp,0,0,w,h);
-      return new Promise(function(res){ c.toBlob(function(b){ res({ blob:b, ext: png?'png':'jpg', url:URL.createObjectURL(b) }); }, png?'image/png':'image/jpeg', .86); });
-    });
-  }
-
-  /* ---------- publishing ---------- */
-  function touched(){
-    rev++; $('btnPublish').disabled = false; setStatus('Değişiklik var — kaydediliyor…','dirty');
-    clearTimeout(timer); timer = setTimeout(publish, 3000);
-  }
-  $('btnPublish').addEventListener('click', function(){ clearTimeout(timer); publish(); });
-  window.addEventListener('beforeunload', function(e){ if(hasChanges() || publishing){ e.preventDefault(); e.returnValue=''; } });
-
-  function gh(path, opts){
-    opts = opts || {};
-    return fetch('https://api.github.com/repos/'+CFG.owner+'/'+CFG.repo+path, {
-      method: opts.method||'GET', body: opts.body ? JSON.stringify(opts.body) : undefined,
-      headers: Object.assign({ Authorization:'Bearer '+token(), Accept: opts.accept||'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28' }, opts.body?{'Content-Type':'application/json'}:{})
-    }).then(function(r){
-      if(opts.raw) return r.ok ? r.text() : Promise.reject({status:r.status});
-      return r.json().then(function(j){ if(!r.ok) return Promise.reject({status:r.status, j:j}); return j; });
-    });
-  }
-  function blobToB64(b){ return new Promise(function(res){ var f=new FileReader(); f.onload=function(){ res(String(f.result).split(',')[1]); }; f.readAsDataURL(b); }); }
-
-  /* Pure: apply the pending changes to the page source. */
-  window.__applyChanges = applyChanges;
-  function applyChanges(htmlText, ch, imgPaths){
-    var doc = new DOMParser().parseFromString(htmlText, 'text/html');
-    Object.keys(ch.texts).forEach(function(k){
-      doc.querySelectorAll('[data-edit="'+k+'"]').forEach(function(el){
-        el.textContent = ch.texts[k];
-        var t = el.getAttribute('data-href-type');
-        if(t) el.setAttribute('href', t==='tel' ? telHref(ch.texts[k]) : 'mailto:'+ch.texts[k].trim());
-      });
-    });
-    Object.keys(imgPaths||{}).forEach(function(k){
-      doc.querySelectorAll('[data-edit-img="'+k+'"]').forEach(function(el){ el.setAttribute(el.getAttribute('data-attr')||'src', imgPaths[k]); });
-    });
-    Object.keys(ch.alts).forEach(function(k){
-      doc.querySelectorAll('img[data-edit-img="'+k+'"]').forEach(function(el){ el.setAttribute('alt', ch.alts[k]); });
-    });
-    var m = ch.meta;
-    if(m && m.title !== undefined){
-      doc.title = m.title;
-      var md = doc.querySelector('meta[name=description]'); if(md) md.setAttribute('content', m.description);
-      var sel = doc.getElementById('f-type');
-      if(sel){ sel.innerHTML=''; m.types.split('\n').map(function(s){return s.trim();}).filter(Boolean).forEach(function(s){ var o=doc.createElement('option'); o.textContent=s; sel.appendChild(o); }); }
-      var ta = doc.getElementById('f-msg'); if(ta) ta.setAttribute('placeholder', m.placeholder);
-    }
-    return '<!doctype html>\n' + doc.documentElement.outerHTML + '\n';
-  }
-
-  function commitFiles(branch, files, message){
-    // files: [{path, content, encoding}]  -> one commit
-    var base;
-    return gh('/git/ref/heads/'+branch).then(function(ref){
-      base = ref.object.sha; return gh('/git/commits/'+base);
-    }).then(function(commit){
-      return Promise.all(files.map(function(f){ return gh('/git/blobs', {method:'POST', body:{content:f.content, encoding:f.encoding}}).then(function(b){ return {path:f.path, mode:'100644', type:'blob', sha:b.sha}; }); }))
-        .then(function(tree){ return gh('/git/trees', {method:'POST', body:{base_tree:commit.tree.sha, tree:tree}}); });
-    }).then(function(tree){
-      return gh('/git/commits', {method:'POST', body:{message:message, tree:tree.sha, parents:[base]}});
-    }).then(function(c){
-      return gh('/git/refs/heads/'+branch, {method:'PATCH', body:{sha:c.sha}});
-    });
-  }
-  window.__commitFiles = commitFiles;
-
-  function publish(attempt){
-    if(publishing){ clearTimeout(timer); timer=setTimeout(publish, 1500); return; }
-    if(!hasChanges()){ setStatus('Değişiklik yok'); $('btnPublish').disabled=true; return; }
-    publishing = true; setStatus('Yayınlanıyor…','dirty');
-    var snap = { rev:rev, texts:Object.assign({},changes.texts), alts:Object.assign({},changes.alts), meta:Object.assign({},changes.meta), imgs:Object.assign({},changes.imgs) };
-    var stamp = Date.now(), imgPaths = {}, imgFiles = [];
-    Object.keys(snap.imgs).forEach(function(k){ imgPaths[k] = 'uploads/'+k+'-'+stamp+'.'+snap.imgs[k].ext; });
-    gh('/contents/index.html?ref='+CFG.branch, {accept:'application/vnd.github.raw+json', raw:true}).then(function(src){
-      var html = applyChanges(src, snap, imgPaths);
-      return Promise.all(Object.keys(snap.imgs).map(function(k){ return blobToB64(snap.imgs[k].blob).then(function(b64){ return {path:imgPaths[k], content:b64, encoding:'base64'}; }); }))
-        .then(function(imgs){ return commitFiles(CFG.branch, imgs.concat([{path:'index.html', content:html, encoding:'utf-8'}]), 'Yönetim paneli: içerik güncellendi'); });
-    }).then(function(){
-      // drop what was published (unless edited again meanwhile)
-      Object.keys(snap.texts).forEach(function(k){ if(changes.texts[k]===snap.texts[k]) delete changes.texts[k]; });
-      Object.keys(snap.alts).forEach(function(k){ if(changes.alts[k]===snap.alts[k]) delete changes.alts[k]; });
-      Object.keys(snap.imgs).forEach(function(k){ if(changes.imgs[k]===snap.imgs[k]) delete changes.imgs[k]; });
-      if(JSON.stringify(changes.meta)===JSON.stringify(snap.meta)) changes.meta = {};
-      publishing = false;
-      if(hasChanges()){ setStatus('Değişiklik var — kaydediliyor…','dirty'); clearTimeout(timer); timer=setTimeout(publish, 1200); }
-      else { setStatus('Yayınlandı ✓ (sitede ~1 dk içinde görünür)','ok'); $('btnPublish').disabled=true; }
-    }).catch(function(err){
-      publishing = false;
-      if(!attempt && err && err.status===422){ return publish(1); }
-      var msg = err && err.status===401 ? 'Yayın anahtarı geçersiz — Ayarlar\'dan silip yenisini girin.' : 'Yayınlanamadı' + (err && err.status ? ' ('+err.status+')' : '');
-      setStatus(msg,'bad'); toast(msg); $('btnPublish').disabled=false;
-    });
-  }
-
-  /* ---------- boot ---------- */
-  if(sessionStorage.getItem(SS_AUTH)==='1') showApp();
+/* boot */
+if(sessionStorage.getItem(SS_AUTH)==='1')showApp();
 })();
 </script>
-</body>
-</html>
+</body></html>
